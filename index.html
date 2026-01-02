@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0c0f" />
+  <meta name="description" content="sixteen — fashion lookbook. minimal. high-end." />
+  <title>sixteen — lookbook</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+
+  <!-- Topbar -->
+  <header class="topbar" id="top">
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a class="brand" href="#top" aria-label="sixteen Start">
+        <!-- LOGO SLOT -->
+        <img src="https://img.freepik.com/psd-premium/blaue-und-lila-abstrakte-geometrische-form-auf-durchsichtigem-hintergrund_1007521-9365.jpg?semt=ais_hybrid&w=740&q=80" alt="sixteen" class="brand__logo" />
+        <span class="brand__text">6teen</span>
+      </a>
+
+      <div class="nav__links">
+        <a href="#chapter01" class="nav__link">Chapter 01</a>
+        <a href="#lookbook" class="nav__link">Lookbook</a>
+        <a href="#chapter02" class="nav__link">Chapter 02</a>
+        <a href="#materials" class="nav__link">Materials</a>
+        <a href="#drops" class="nav__link">Drops</a>
+      </div>
+
+      <div class="nav__right">
+        <button class="nav__btn" data-open="menu" aria-expanded="false" aria-controls="menuPanel">
+          <span class="nav__btnLabel">Menu</span>
+          <span class="nav__burger" aria-hidden="true"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Menu -->
+    <aside class="menu" id="menuPanel" aria-hidden="true">
+      <div class="menu__inner">
+        <div class="menu__top">
+          <span class="menu__title">Navigation</span>
+          <button class="menu__close" data-close="menu" aria-label="Menü schließen">✕</button>
+        </div>
+
+        <div class="menu__grid">
+          <a class="menu__item" href="#chapter01">Chapter 01</a>
+          <a class="menu__item" href="#lookbook">Lookbook</a>
+          <a class="menu__item" href="#chapter02">Chapter 02</a>
+          <a class="menu__item" href="#materials">Materials</a>
+          <a class="menu__item" href="#studio">Studio</a>
+          <a class="menu__item" href="#drops">Drops</a>
+          <a class="menu__item" href="#newsletter">Newsletter</a>
+          <a class="menu__item" href="#footer">Contact</a>
+        </div>
+
+        <div class="menu__meta">
+          <p class="menu__note">Minimal. Precise. Editorial. <span class="dot">•</span> sixteen.</p>
+          <div class="menu__social">
+            <a href="#" class="menu__socialLink">Instagram</a>
+            <a href="#" class="menu__socialLink">TikTok</a>
+            <a href="#" class="menu__socialLink">YouTube</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </header>
+
+  <main id="main">
+
+    <!-- =========================
+         SWOOSH SECTION #1 (Hero)
+         ========================= -->
+    <section class="swoosh swoosh--hero" id="chapter01" data-swoosh aria-label="Chapter 01">
+      <div class="swoosh__sticky" data-sticky>
+        <div class="swoosh__bg" aria-hidden="true"></div>
+
+        <div class="swoosh__copy">
+          <p class="kicker reveal" data-reveal>sixteen <span class="dot">•</span> lookbook</p>
+          <h1 class="headline reveal" data-reveal>
+  Kleidung, die still schreit.
+</h1>
+
+<p class="subline reveal" data-reveal>
+  High-end essentials. Editorial energy.
+</p>
+
+          <div class="ctaRow reveal" data-reveal>
+            <a class="cta" href="#lookbook">Lookbook</a>
+            <a class="cta cta--ghost" href="#drops">Drops</a>
+          </div>
+          <p class="fine reveal" data-reveal>
+            Ersetze Assets in <code>assets/</code> — iOS/Android/PC ready.
+          </p>
+        </div>
+
+      
+         <div class="swoosh__visual swoosh__visual--yt" data-visual>
+  <div class="yt">
+    <iframe
+      src="https://youtu.be/5i0vYvWcaGo?si=xLjD_PbhTAwtLIZL"
+      title="sixteen video"
+      frameborder="0"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+</div>
+
+
+        <!-- Cover frame (target) -->
+        <div class="cover" data-frame aria-hidden="true">
+          <div class="cover__outer">
+            <div class="cover__inner">
+              <div class="cover__window" data-window></div>
+              <div class="cover__shine"></div>
+
+              <div class="cover__mast">
+                <span class="cover__brand">sixteen</span>
+                <span class="cover__line"></span>
+                <span class="cover__issue">chapter 01</span>
+              </div>
+
+              <div class="cover__mat"></div>
+            </div>
+          </div>
+
+          <div class="cover__label">
+            <span class="cover__labelBrand">sixteen</span><span class="dot">•</span><span>lookbook cover</span>
+          </div>
+        </div>
+
+        <div class="scrollHint" aria-hidden="true">
+          <span class="scrollHint__line"></span>
+          <span class="scrollHint__text">Scroll</span>
+        </div>
+      </div>
+
+      <!-- scroll distance for this section -->
+      <div class="swoosh__spacer" aria-hidden="true"></div>
+    </section>
+
+    <!-- Strip -->
+    <section class="strip" aria-label="Statement">
+      <div class="strip__inner">
+        <p class="strip__big reveal" data-reveal>“Weniger laut. Mehr Wirkung.”</p>
+        <p class="strip__small reveal" data-reveal>sixteen ist nicht Trend. sixteen ist Haltung.</p>
+      </div>
+    </section>
+
+    <!-- =========================
+         FULL BLEED EDITORIAL VISUAL (no boxes)
+         ========================= -->
+    <section class="bleed" aria-label="Editorial Visual">
+      <div class="bleed__inner">
+        <div class="bleed__media reveal" data-reveal>
+          <img class="bleed__img" src="assets/bleed-01.jpg" alt="Editorial shot" loading="lazy" decoding="async" />
+        </div>
+        <div class="bleed__text">
+          <p class="kicker reveal" data-reveal>Editorial</p>
+          <h2 class="title reveal" data-reveal>Ein Bild reicht.</h2>
+          <p class="muted reveal" data-reveal>
+            Keine Shop-Kacheln. Kein Lärm. Nur Form, Stoff, Licht.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         SWOOSH SECTION #2 (Mid chapter)
+         ========================= -->
+    <section class="swoosh" id="chapter02" data-swoosh aria-label="Chapter 02">
+      <div class="swoosh__sticky" data-sticky>
+        <div class="swoosh__bg swoosh__bg--soft" aria-hidden="true"></div>
+
+        <div class="swoosh__copy swoosh__copy--right">
+          <p class="kicker reveal" data-reveal>chapter 02</p>
+          <h2 class="title reveal" data-reveal>Silhouette. Presence. Control.</h2>
+          <p class="lead reveal" data-reveal>
+            Ein zweiter “Cover Moment” — perfekt für deinen nächsten Drop oder Lookbook-Page.
+          </p>
+        </div>
+
+        <div class="swoosh__visual" data-visual>
+          <img class="media" src="assets/chapter-02.jpg" alt="" loading="lazy" decoding="async" />
+        </div>
+
+        <div class="cover cover--alt" data-frame aria-hidden="true">
+          <div class="cover__outer">
+            <div class="cover__inner">
+              <div class="cover__window" data-window></div>
+              <div class="cover__shine"></div>
+
+              <div class="cover__mast">
+                <span class="cover__brand">sixteen</span>
+                <span class="cover__line"></span>
+                <span class="cover__issue">chapter 02</span>
+              </div>
+
+              <div class="cover__mat"></div>
+            </div>
+          </div>
+
+          <div class="cover__label">
+            <span class="cover__labelBrand">sixteen</span><span class="dot">•</span><span>editorial page</span>
+          </div>
+        </div>
+
+        <div class="scrollHint" aria-hidden="true">
+          <span class="scrollHint__line"></span>
+          <span class="scrollHint__text">Scroll</span>
+        </div>
+      </div>
+
+      <div class="swoosh__spacer swoosh__spacer--short" aria-hidden="true"></div>
+    </section>
+
+    <!-- =========================
+         LOOKBOOK RAIL
+         ========================= -->
+    <section class="lookbook" id="lookbook" aria-label="Lookbook">
+      <header class="sectionHead sectionHead--wide">
+        <p class="kicker reveal" data-reveal>Lookbook</p>
+        <h2 class="title reveal" data-reveal>Swipe. Scroll. Repeat.</h2>
+      </header>
+
+      <div class="rail">
+        <div class="rail__track" data-rail-track>
+          <figure class="rail__item">
+            <img src="assets/look-01.jpg" alt="Look 01" loading="lazy" decoding="async" />
+            <figcaption>Look 01 — Night Core</figcaption>
+          </figure>
+          <figure class="rail__item">
+            <img src="assets/look-02.jpg" alt="Look 02" loading="lazy" decoding="async" />
+            <figcaption>Look 02 — Clean Cut</figcaption>
+          </figure>
+          <figure class="rail__item">
+            <img src="assets/look-03.jpg" alt="Look 03" loading="lazy" decoding="async" />
+            <figcaption>Look 03 — Studio Grey</figcaption>
+          </figure>
+          <figure class="rail__item">
+            <img src="assets/look-04.jpg" alt="Look 04" loading="lazy" decoding="async" />
+            <figcaption>Look 04 — Silent Heat</figcaption>
+          </figure>
+          <figure class="rail__item">
+            <img src="assets/look-05.jpg" alt="Look 05" loading="lazy" decoding="async" />
+            <figcaption>Look 05 — Black Form</figcaption>
+          </figure>
+          <figure class="rail__item">
+            <img src="assets/look-06.jpg" alt="Look 06" loading="lazy" decoding="async" />
+            <figcaption>Look 06 — Minimal Pressure</figcaption>
+          </figure>
+        </div>
+
+        <div class="rail__ui" aria-hidden="true">
+          <div class="rail__bar"><span class="rail__thumb" data-rail-thumb></span></div>
+          <div class="rail__hint">Drag / Scroll</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         SWOOSH SECTION #3 (Materials cover moment)
+         ========================= -->
+    <section class="swoosh swoosh--materials" id="materials" data-swoosh aria-label="Materials">
+      <div class="swoosh__sticky" data-sticky>
+        <div class="swoosh__bg swoosh__bg--grain" aria-hidden="true"></div>
+
+        <div class="swoosh__copy">
+          <p class="kicker reveal" data-reveal>Materials</p>
+          <h2 class="title reveal" data-reveal>Wenn Stoff wie Oberfläche wirkt.</h2>
+          <p class="lead reveal" data-reveal>
+            Macro-Shots + Cover-Moment. Sehr “Apple”, aber Fashion.
+          </p>
+
+          <div class="facts reveal" data-reveal>
+            <div class="fact"><span class="fact__num">480</span><span class="fact__label">GSM (Beispiel)</span></div>
+            <div class="fact"><span class="fact__num">2×</span><span class="fact__label">Wash (Beispiel)</span></div>
+            <div class="fact"><span class="fact__num">0</span><span class="fact__label">Noise Branding</span></div>
+          </div>
+        </div>
+
+        <div class="swoosh__visual" data-visual>
+          <img class="media" src="assets/macro.jpg" alt="" loading="lazy" decoding="async" />
+        </div>
+
+        <div class="cover cover--tight" data-frame aria-hidden="true">
+          <div class="cover__outer">
+            <div class="cover__inner">
+              <div class="cover__window" data-window></div>
+              <div class="cover__shine"></div>
+
+              <div class="cover__mast">
+                <span class="cover__brand">sixteen</span>
+                <span class="cover__line"></span>
+                <span class="cover__issue">materials</span>
+              </div>
+
+              <div class="cover__mat"></div>
+            </div>
+          </div>
+
+          <div class="cover__label">
+            <span class="cover__labelBrand">sixteen</span><span class="dot">•</span><span>spec page</span>
+          </div>
+        </div>
+
+        <div class="scrollHint" aria-hidden="true">
+          <span class="scrollHint__line"></span>
+          <span class="scrollHint__text">Scroll</span>
+        </div>
+      </div>
+
+      <div class="swoosh__spacer" aria-hidden="true"></div>
+    </section>
+
+    <!-- =========================
+         STUDIO (video)
+         ========================= -->
+    <section class="studio" id="studio" aria-label="Studio">
+      <header class="sectionHead sectionHead--wide">
+        <p class="kicker reveal" data-reveal>Studio</p>
+        <h2 class="title reveal" data-reveal>Ein Drop fühlt sich an wie ein Release.</h2>
+      </header>
+
+      <div class="cinema">
+        <div class="cinema__media reveal" data-reveal>
+          <video class="cinema__video" autoplay muted playsinline loop preload="metadata" poster="assets/studio-poster.jpg">
+            <source src="assets/studio.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <div class="cinema__copy">
+          <p class="lead reveal" data-reveal>
+            Clean Cuts. Quiet energy. Keine Shop-Kacheln — nur Story.
+          </p>
+
+          <div class="bullets">
+            <div class="bullet reveal" data-reveal>
+              <span class="bullet__title">Editorial First</span>
+              <span class="bullet__text">Du verkaufst nicht. Du inszenierst.</span>
+            </div>
+            <div class="bullet reveal" data-reveal>
+              <span class="bullet__title">Slow Drops</span>
+              <span class="bullet__text">Weniger Releases, mehr Wirkung.</span>
+            </div>
+            <div class="bullet reveal" data-reveal>
+              <span class="bullet__title">High-end Touch</span>
+              <span class="bullet__text">Performance + Typo + Raum.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         DROPS (editorial list)
+         ========================= -->
+    <section class="drops" id="drops" aria-label="Drops">
+      <header class="sectionHead">
+        <p class="kicker reveal" data-reveal>Drops</p>
+        <h2 class="title reveal" data-reveal>Die nächsten Kapitel.</h2>
+      </header>
+
+      <div class="timeline">
+        <article class="drop reveal" data-reveal>
+          <div class="drop__left">
+            <p class="drop__tag">Drop 01</p>
+            <h3 class="drop__title">Black Form</h3>
+            <p class="drop__desc">Heavy hoodie. Wide tee. Clean cap. Max Form.</p>
+            <p class="muted">Datum später einsetzen.</p>
+          </div>
+          <div class="drop__right">
+            <img src="assets/drop-01.jpg" alt="Drop 01" loading="lazy" decoding="async" />
+          </div>
+        </article>
+
+        <article class="drop reveal" data-reveal>
+          <div class="drop__left">
+            <p class="drop__tag">Drop 02</p>
+            <h3 class="drop__title">Studio Grey</h3>
+            <p class="drop__desc">Architecture cuts. Quiet surface. Strong presence.</p>
+            <p class="muted">Info später einsetzen.</p>
+          </div>
+          <div class="drop__right">
+            <img src="assets/drop-02.jpg" alt="Drop 02" loading="lazy" decoding="async" />
+          </div>
+        </article>
+
+        <article class="drop reveal" data-reveal>
+          <div class="drop__left">
+            <p class="drop__tag">Drop 03</p>
+            <h3 class="drop__title">Silent Heat</h3>
+            <p class="drop__desc">Summer pieces. Structure > print. Form > trend.</p>
+            <p class="muted">Info später einsetzen.</p>
+          </div>
+          <div class="drop__right">
+            <img src="assets/drop-03.jpg" alt="Drop 03" loading="lazy" decoding="async" />
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter" id="newsletter" aria-label="Newsletter">
+      <div class="newsletter__inner">
+        <header class="sectionHead sectionHead--compact">
+          <p class="kicker reveal" data-reveal>Newsletter</p>
+          <h2 class="title reveal" data-reveal>Drop-Infos, ohne Spam.</h2>
+        </header>
+
+        <form class="form reveal" data-reveal>
+          <label class="form__label" for="email">E-Mail</label>
+          <div class="form__row">
+            <input class="form__input" id="email" name="email" type="email" placeholder="you@domain.com" autocomplete="email" />
+            <button class="form__btn" type="button" data-toast="true">Join</button>
+          </div>
+          <p class="muted form__fine">Demo Button (ohne Backend).</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer" aria-label="Footer">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span class="brand__text brand__text--footer">sixteen</span>
+          <p class="muted">High-end lookbook. Minimal noise. Maximum form.</p>
+        </div>
+
+        <div class="footer__cols">
+          <div class="footer__col">
+            <h4>Explore</h4>
+            <a href="#chapter01">Chapter 01</a>
+            <a href="#lookbook">Lookbook</a>
+            <a href="#chapter02">Chapter 02</a>
+            <a href="#materials">Materials</a>
+          </div>
+          <div class="footer__col">
+            <h4>Social</h4>
+            <a href="#">Instagram</a>
+            <a href="#">TikTok</a>
+            <a href="#">YouTube</a>
+          </div>
+          <div class="footer__col">
+            <h4>Legal</h4>
+            <a href="#">Impressum</a>
+            <a href="#">Datenschutz</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="muted">© <span id="year"></span> sixteen.</p>
+        <a class="toTop" href="#top">Back to top ↑</a>
+      </div>
+    </footer>
+
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
+    <span class="toast__text">Saved. (Demo)</span>
+  </div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
