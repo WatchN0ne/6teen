@@ -141,7 +141,7 @@
 
     // subtle polish (avoid heavy blur for perf)
     const op = lerp(1, 0.94, eFit);
-    visual.style.opacity = String(op);
+   visual.style.borderRadius = `${lerp(0, 26, eFit)}px`;
     visual.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${scale})`;
 
     // frame settle (tiny)
@@ -191,4 +191,5 @@
 
   update();
 })();
+
 
