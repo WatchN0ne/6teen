@@ -159,14 +159,19 @@
     visual.style.opacity = "1";
     visual.style.filter = "none";
 
-    // END: premium dissolve (no fall, no toss, no abrupt)
-    const tOut = clamp((p - 0.90) / 0.10, 0, 1);
-    const eOut = ease(tOut);
+    // END BLEND (no empty, no vanish)
+const tOut = clamp((p - 0.88) / 0.12, 0, 1);
+const eOut = ease(tOut);
 
-    if (tOut > 0){
-      visual.style.opacity = String(lerp(1, 0, eOut));
-      visual.style.filter = `blur(${lerp(0, 10, eOut)}px)`;
-    }
+// keep visual alive (never goes to 0)
+visual.style.opacity = "1";
+visual.style.filter = "none";
+
+// darken overlay slightly to prepare next section blend
+if (overlay){
+  overlay.style.opacity = String(lerp(0.42, 0.70, eOut));
+}
+
   }
 
   function update(){
@@ -190,3 +195,4 @@
 
   update();
 })();
+
