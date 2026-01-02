@@ -779,3 +779,7 @@ code{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liber
   transform: scale(1.06); /* damit keine schwarzen Ränder */
 }
 
+.swoosh__visual--yt iframe{
+  pointer-events: none; /* verhindert Klick/Fokus */
+}
+
