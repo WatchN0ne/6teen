@@ -291,12 +291,15 @@ code{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liber
   aspect-ratio: 4 / 3; /* Macro feels better */
 }
 .media{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  transform: scale(1.02);
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 }
+video.media{
+  background: #000; /* falls laden kurz dauert */
+}
+
 
 /* Scroll hint */
 .scrollHint{
@@ -797,5 +800,7 @@ transform: translate3d(-50%, -50%, 0) scale(1);
 }
 .heroVideo::-webkit-media-controls{ display:none !important; }
 .heroVideo::-webkit-media-controls-enclosure{ display:none !important; }
+
+.swoosh--chapter2 .swoosh__visual{ aspect-ratio: 21 / 9; }
 
 
