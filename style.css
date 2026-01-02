@@ -580,3 +580,44 @@ a:hover{ opacity:.92; }
   }
   .chapter__spacer{ height: 120vh; }
 }
+
+/* ===== Premium Mode: no visible boxes/guides ===== */
+
+/* frame exists for JS target, but is visually invisible */
+.frame{
+  border:0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding:0 !important;
+}
+
+/* remove all “magazine UI” elements that look like boxes */
+.frame::before{ display:none !important; }
+.frame__mast,
+.frame__tag,
+.frame__grain{ display:none !important; }
+
+/* window = the only thing that matters.
+   We make it subtle: a soft matte + rounded corners,
+   NO outline and NO guide lines. */
+.frame__window{
+  inset: 0 !important;
+  border-radius: 26px !important;
+  overflow: hidden !important;
+  background: rgba(255,255,255,.02); /* extremely subtle matte */
+  box-shadow: 0 30px 120px rgba(0,0,0,.55);
+}
+
+/* IMPORTANT: remove any visible “window frame” lines */
+.frame__window{
+  outline: none !important;
+  border: none !important;
+}
+
+/* If you have any debug grid/lines anywhere, kill them */
+[data-debug],
+.debug,
+.guide,
+.gridlines{
+  display:none !important;
+}
