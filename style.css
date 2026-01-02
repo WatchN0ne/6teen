@@ -218,20 +218,25 @@ a:hover{ opacity:.92; }
   overflow:hidden;
 }
 
-/* PREMIUM FILL (no empty moments, no “boxes”) */
+/* PREMIUM FILL — no visible “grey box” after swoosh */
 .chapter__sticky::before{
   content:"";
   position:absolute;
-  inset:-20%;
+  inset:0;                 /* wichtig: keine -20% Fläche, die wie Box wirkt */
   z-index:0;
-  background:
-    radial-gradient(900px 620px at 50% 35%, rgba(255,255,255,.08), transparent 60%),
-    radial-gradient(700px 520px at 18% 75%, rgba(255,255,255,.05), transparent 62%),
-    linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.88));
-  filter: blur(12px);
-  opacity:.95;
   pointer-events:none;
+
+  /* sehr weicher ambient fill ohne harte Kanten */
+  background:
+    radial-gradient(1200px 900px at 50% 20%, rgba(255,255,255,.07), transparent 60%),
+    radial-gradient(900px 700px at 15% 70%, rgba(255,255,255,.05), transparent 62%),
+    radial-gradient(900px 700px at 85% 80%, rgba(255,255,255,.04), transparent 62%),
+    linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.92));
+
+  opacity:1;
+  /* kein blur! blur macht es milchig/boxig */
 }
+
 
 .chapter__media{
   position:absolute;
@@ -554,4 +559,9 @@ body.js-on .spread.is-visible .spread__copy{
   }
   .chapter__spacer{ height: 140vh; }
   body.js-on .spread{ opacity:1 !important; transform:none !important; filter:none !important; }
+}
+
+/* Always solid base behind everything (kills box feeling) */
+.chapter__sticky{
+  background:#000;
 }
