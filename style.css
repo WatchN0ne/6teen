@@ -313,15 +313,18 @@ a:hover{ opacity:.92; }
   box-shadow:none;
   padding:0;
 }
+/* Target window is ONLY for JS math — must be visually invisible */
 .frame__window{
   position:absolute;
   inset:0;
   border-radius: 26px;
   overflow:hidden;
-  background: rgba(255,255,255,.02);
-  box-shadow: 0 30px 120px rgba(0,0,0,.55);
+  background: transparent !important;
+  box-shadow: none !important;
+  opacity: 0 !important;        /* <- absolut unsichtbar */
   pointer-events:none;
 }
+
 
 /* Scroll hint */
 .scroll{
@@ -565,3 +568,4 @@ body.js-on .spread.is-visible .spread__copy{
 .chapter__sticky{
   background:#000;
 }
+
