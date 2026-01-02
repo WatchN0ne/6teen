@@ -691,3 +691,35 @@ a:hover{ opacity:.92; }
   background: rgba(255,255,255,.02);
   box-shadow: 0 30px 120px rgba(0,0,0,.55);
 }
+
+/* ===== Continuous Backdrop (keine Leere mehr) ===== */
+
+.chapter{
+  background: #000;
+}
+
+.chapter::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background:
+    radial-gradient(1200px 700px at 50% 30%, rgba(255,255,255,.06), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.85));
+  pointer-events:none;
+}
+
+/* backdrop clone of media */
+.chapter__backdrop{
+  position:absolute;
+  inset:-6%;
+  z-index:0;
+  filter: blur(60px) saturate(1.15) contrast(1.05);
+  opacity:.55;
+  transform: scale(1.08);
+}
+
+/* ensure main media stays above */
+.chapter__media{ z-index:2; }
+.chapter__overlay{ z-index:3; }
+.chapter__copy{ z-index:4; }
