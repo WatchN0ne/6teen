@@ -35,11 +35,6 @@
     v.setAttribute("webkit-playsinline", "");
     v.tabIndex = -1;
     v.blur();
-    document.querySelectorAll("video.media").forEach(v => {
-  v.addEventListener("loadedmetadata", () => {
-    // einmal neu berechnen, damit Swoosh korrekt ist
-    window.dispatchEvent(new Event("resize"));
-  }, { once: true });
 });
 
   const menu = $("#menuPanel");
@@ -265,6 +260,7 @@ const tEnd = 0.78;
   // initial render
   update();
 })();
+
 
 
 
