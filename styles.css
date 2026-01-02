@@ -330,7 +330,9 @@ code{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liber
   width: min(820px, 70vw);
   aspect-ratio: 4 / 5;
   opacity: 0;
-  transform: translate3d(10vw, 8vh, 0) scale(.92); /* <- nach rechts */
+  left: 50%;
+  top: 52%;
+  transform: translate3d(-50%, -46%, 0) scale(.92); /* <- nach rechts */
   will-change: transform, opacity;
   display:grid;
   place-items:center;
@@ -374,6 +376,7 @@ code{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liber
   position:absolute; top:16px; left:16px; right:16px;
   display:flex; align-items:center; gap:12px;
   z-index:2; mix-blend-mode: screen;
+  text-shadow: 0 10px 30px rgba(0,0,0,.55);
 }
 .cover__brand{
   font-size:12px;
@@ -776,7 +779,10 @@ code{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liber
   width:100%;
   height:100%;
   border:0;
-  transform: scale(1.06); /* damit keine schwarzen Ränder */
+ left: 50%;
+top: 52%;
+transform: translate3d(-50%, -50%, 0) scale(1);
+ /* damit keine schwarzen Ränder */
 }
 
 .swoosh__visual--yt iframe{
@@ -791,4 +797,5 @@ code{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liber
 }
 .heroVideo::-webkit-media-controls{ display:none !important; }
 .heroVideo::-webkit-media-controls-enclosure{ display:none !important; }
+
 
