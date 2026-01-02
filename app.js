@@ -26,6 +26,18 @@
   // -----------------------------
   // Menu
   // -----------------------------
+  document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("video.heroVideo").forEach(v => {
+    v.controls = false;
+    v.disablePictureInPicture = true;
+    v.setAttribute("controlslist", "nodownload noplaybackrate noremoteplayback");
+    v.setAttribute("playsinline", "");
+    v.setAttribute("webkit-playsinline", "");
+    v.tabIndex = -1;
+    v.blur();
+  });
+});
+
   const menu = $("#menuPanel");
   const openBtn = document.querySelector('[data-open="menu"]');
   const closeBtn = document.querySelector('[data-close="menu"]');
@@ -249,4 +261,5 @@
   // initial render
   update();
 })();
+
 
