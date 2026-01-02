@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" id="top">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -13,10 +13,11 @@
 <body>
   <a class="skip" href="#main">Zum Inhalt</a>
 
-  <!-- Top Nav -->
+  <!-- NAV -->
   <header class="nav">
     <a class="brand" href="#top" aria-label="sixteen">
-      <img class="brand__logo" src="7f4119a6-4506-48a0-b054-b69c0becef1a.png" alt="sixteen" />
+      <!-- LOGO SLOT: einfach einfügen -->
+      <!-- <img class="brand__logo" src="DEIN_LOGO_LINK.svg" alt="sixteen" /> -->
       <span class="brand__word">sixteen</span>
     </a>
 
@@ -35,7 +36,7 @@
     </button>
   </header>
 
-  <!-- Slide menu -->
+  <!-- MENU -->
   <aside class="menu" id="menu" aria-hidden="true">
     <div class="menu__panel">
       <div class="menu__top">
@@ -66,44 +67,39 @@
   <main id="main">
 
     <!-- =========================
-         CHAPTER 01 (VIDEO) — FULLSCREEN SWOOSH
+         CHAPTER 01 — VIDEO (FULLSCREEN)
          ========================= -->
     <section class="chapter chapter--video" id="chapter01" data-chapter>
       <div class="chapter__sticky" data-sticky>
+
         <div class="chapter__media" data-visual>
-         <div class="chapter__backdrop">
-  <!-- DUPLIKAT vom Media -->
-  <video autoplay muted loop playsinline preload="metadata">
-    <source src="Street Clothing Brand Promotional Video.mp4" type="video/mp4">
-  </video>
+          <video class="media media--video"
+            autoplay muted loop playsinline preload="metadata"
+            tabindex="-1" aria-hidden="true"
+            disablepictureinpicture
+            controlslist="nodownload noplaybackrate noremoteplayback">
+            <source src="./video-01.mp4" type="video/mp4" />
+          </video>
         </div>
 
-        <!-- editorial overlay (nicht boxig) -->
         <div class="chapter__overlay" aria-hidden="true"></div>
 
         <div class="chapter__copy">
           <p class="eyebrow">SIXTEEN <span class="dot">•</span> CHAPTER 01</p>
           <h1 class="h1">Kleidung, die still schreit.</h1>
-          <p class="lead">Fashion-Editorial in Bewegung. Keine Shop-Kacheln. Nur Form, Licht, Stoff.</p>
+          <p class="lead">Fashion-Editorial in Bewegung. Keine Kacheln. Kein Lärm.</p>
 
           <div class="actions">
             <a class="btn" href="#lookbook">Lookbook</a>
             <a class="btn btn--ghost" href="#drops">Drops</a>
           </div>
 
-          <p class="micro">Scroll → Text verschwindet, Video bleibt clean.</p>
+          <p class="micro">Scroll → Text verschwindet, Motion bleibt clean.</p>
         </div>
 
-        <!-- “Magazine frame” target (wo das Visual rein swoosht) -->
+        <!-- Invisible target for fit (no visible boxes) -->
         <div class="frame" data-frame aria-hidden="true">
           <div class="frame__window" data-window></div>
-          <div class="frame__mast">
-            <span>sixteen</span>
-            <span class="line"></span>
-            <span>issue 01</span>
-          </div>
-          <div class="frame__tag">LOOKBOOK MOTION</div>
-          <div class="frame__grain"></div>
         </div>
 
         <div class="scroll" aria-hidden="true">
@@ -115,28 +111,27 @@
       <div class="chapter__spacer" aria-hidden="true"></div>
     </section>
 
-    <!-- Editorial statement strip -->
+    <!-- STATEMENT -->
     <section class="statement">
       <p class="statement__big">“Weniger laut. Mehr Wirkung.”</p>
       <p class="statement__small">sixteen ist nicht Trend. sixteen ist Haltung.</p>
     </section>
 
     <!-- =========================
-         LOOKBOOK — 6 LOOKS (editorial spreads)
+         LOOKBOOK — 6 LOOKS (premium reveal)
          ========================= -->
     <section class="lookbook" id="lookbook">
       <header class="sectionhead">
         <p class="eyebrow">LOOKBOOK</p>
         <h2 class="h2">Six looks. One language.</h2>
-        <p class="lead">Ersetze die Bilder durch deine Links (GitHub RAW / CDN / eigene Domain).</p>
+        <p class="lead">Ersetze die Bilder durch deine Links (RAW/CDN). Keine Boxen – echte Editorial-Spreads.</p>
       </header>
 
-      <!-- Spreads: groß, ruhig, wie Magazin-Doppelseiten -->
       <div class="spreads">
         <article class="spread">
           <div class="spread__media">
             <img class="media media--img" loading="lazy" decoding="async"
-              src="https://images.unsplash.com/photo-1520975958225-0a5f6f83d8c3?auto=format&fit=crop&w=2200&q=80"
+              src="https://images.unsplash.com/photo-1520975958225-0a5f6f83d8c3?auto=format&fit=crop&w=2400&q=80"
               alt="Look 01" />
           </div>
           <div class="spread__copy">
@@ -149,7 +144,7 @@
         <article class="spread spread--reverse">
           <div class="spread__media">
             <img class="media media--img" loading="lazy" decoding="async"
-              src="https://images.unsplash.com/photo-1520975777841-1871f5b0c9d8?auto=format&fit=crop&w=2200&q=80"
+              src="https://images.unsplash.com/photo-1520975777841-1871f5b0c9d8?auto=format&fit=crop&w=2400&q=80"
               alt="Look 02" />
           </div>
           <div class="spread__copy">
@@ -162,7 +157,7 @@
         <article class="spread">
           <div class="spread__media">
             <img class="media media--img" loading="lazy" decoding="async"
-              src="https://images.unsplash.com/photo-1520976001372-e79d84d6c2d4?auto=format&fit=crop&w=2200&q=80"
+              src="https://images.unsplash.com/photo-1520976001372-e79d84d6c2d4?auto=format&fit=crop&w=2400&q=80"
               alt="Look 03" />
           </div>
           <div class="spread__copy">
@@ -175,7 +170,7 @@
         <article class="spread spread--reverse">
           <div class="spread__media">
             <img class="media media--img" loading="lazy" decoding="async"
-              src="https://images.unsplash.com/photo-1520975869014-fb78f8c9b33a?auto=format&fit=crop&w=2200&q=80"
+              src="https://images.unsplash.com/photo-1520975869014-fb78f8c9b33a?auto=format&fit=crop&w=2400&q=80"
               alt="Look 04" />
           </div>
           <div class="spread__copy">
@@ -188,7 +183,7 @@
         <article class="spread">
           <div class="spread__media">
             <img class="media media--img" loading="lazy" decoding="async"
-              src="https://images.unsplash.com/photo-1520975708799-14c64b0e8b6f?auto=format&fit=crop&w=2200&q=80"
+              src="https://images.unsplash.com/photo-1520975708799-14c64b0e8b6f?auto=format&fit=crop&w=2400&q=80"
               alt="Look 05" />
           </div>
           <div class="spread__copy">
@@ -201,7 +196,7 @@
         <article class="spread spread--reverse">
           <div class="spread__media">
             <img class="media media--img" loading="lazy" decoding="async"
-              src="418fc896-a1d9-47d0-8a94-1f764f3d2287.png"
+              src="https://images.unsplash.com/photo-1520975940186-0a3c8e6b70f1?auto=format&fit=crop&w=2400&q=80"
               alt="Look 06" />
           </div>
           <div class="spread__copy">
@@ -214,14 +209,16 @@
     </section>
 
     <!-- =========================
-         CHAPTER 02 (IMAGE) — FULLSCREEN SWOOSH
+         CHAPTER 02 — IMAGE (FULLSCREEN)
          ========================= -->
     <section class="chapter chapter--image" id="chapter02" data-chapter>
       <div class="chapter__sticky" data-sticky>
+
         <div class="chapter__media" data-visual>
-          <div class="chapter__backdrop">
-  <img src="56a64594-b75b-4ba5-98cd-beadfe669d82.png" alt="">
-</div>
+          <img class="media media--img" loading="eager" decoding="async"
+            src="https://images.unsplash.com/photo-1520975959223-8b5f6f3cfe4c?auto=format&fit=crop&w=2600&q=80"
+            alt="Chapter 02 Visual" />
+        </div>
 
         <div class="chapter__overlay chapter__overlay--alt" aria-hidden="true"></div>
 
@@ -229,16 +226,11 @@
           <p class="eyebrow">SIXTEEN <span class="dot">•</span> CHAPTER 02</p>
           <h2 class="h1">Silhouette. Presence. Control.</h2>
           <p class="lead">Ein Bild reicht. Wenn es sitzt.</p>
-          <p class="micro">Hier kannst du später ein echtes Campaign-Hero einsetzen.</p>
+          <p class="micro">Scroll ist bewusst lang – das Visual bleibt länger stehen.</p>
         </div>
 
-        <div class="frame frame--alt" data-frame aria-hidden="true">
+        <div class="frame" data-frame aria-hidden="true">
           <div class="frame__window" data-window></div>
-          <div class="frame__mast">
-            <span>sixteen</span><span class="line"></span><span>issue 02</span>
-          </div>
-          <div class="frame__tag">EDITORIAL STILL</div>
-          <div class="frame__grain"></div>
         </div>
 
         <div class="scroll" aria-hidden="true">
@@ -251,34 +243,32 @@
     </section>
 
     <!-- =========================
-         CHAPTER 03 (VIDEO) — FULLSCREEN SWOOSH
+         CHAPTER 03 — VIDEO (FULLSCREEN)
          ========================= -->
     <section class="chapter chapter--video" id="chapter03" data-chapter>
       <div class="chapter__sticky" data-sticky>
-        <div class="chapter__media" data-visual>
-         <div class="chapter__backdrop">
-  <!-- DUPLIKAT vom Media -->
-  <video autoplay muted loop playsinline preload="metadata">
-    <source src="BORZ WEAR (Streetwear Commercial Video) - ICE SQUAD MEDIA.mp4" type="video/mp4">
-  </video>
-</div>
 
+        <div class="chapter__media" data-visual>
+          <video class="media media--video"
+            autoplay muted loop playsinline preload="metadata"
+            tabindex="-1" aria-hidden="true"
+            disablepictureinpicture
+            controlslist="nodownload noplaybackrate noremoteplayback">
+            <source src="./video-02.mp4" type="video/mp4" />
+          </video>
+        </div>
 
         <div class="chapter__overlay chapter__overlay--soft" aria-hidden="true"></div>
 
         <div class="chapter__copy">
           <p class="eyebrow">SIXTEEN <span class="dot">•</span> CHAPTER 03</p>
           <h2 class="h1">Motion, aber leise.</h2>
-          <p class="lead">Video wie ein Cover. Dann wird’s zur Seite – und verschwindet.</p>
+          <p class="lead">Clean transitions. Kein „Fallen“, kein Abriss – nur Tiefe.</p>
+          <p class="micro">Am Ende löst es sich auf (premium dissolve).</p>
         </div>
 
-        <div class="frame frame--tight" data-frame aria-hidden="true">
+        <div class="frame" data-frame aria-hidden="true">
           <div class="frame__window" data-window></div>
-          <div class="frame__mast">
-            <span>sixteen</span><span class="line"></span><span>issue 03</span>
-          </div>
-          <div class="frame__tag">DROP PREVIEW</div>
-          <div class="frame__grain"></div>
         </div>
 
         <div class="scroll" aria-hidden="true">
@@ -291,13 +281,13 @@
     </section>
 
     <!-- =========================
-         Materials / Drops (minimal, clean)
+         MATERIALS
          ========================= -->
     <section class="materials" id="materials">
       <header class="sectionhead">
         <p class="eyebrow">MATERIALS</p>
         <h2 class="h2">Stoff als Oberfläche.</h2>
-        <p class="lead">Kurze Fakten. Kein Marketing-Lärm.</p>
+        <p class="lead">Kurz, klar, premium. Kein Marketing-Lärm.</p>
       </header>
 
       <div class="facts">
@@ -307,11 +297,14 @@
       </div>
     </section>
 
+    <!-- =========================
+         DROPS
+         ========================= -->
     <section class="drops" id="drops">
       <header class="sectionhead">
         <p class="eyebrow">DROPS</p>
         <h2 class="h2">Nächste Kapitel.</h2>
-        <p class="lead">Nur ein Teaser. Kein Shop.</p>
+        <p class="lead">Nur Teaser. Kein Shop.</p>
       </header>
 
       <div class="drops__list">
@@ -333,6 +326,7 @@
       </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="footer">
       <div class="footer__inner">
         <div>
@@ -359,12 +353,3 @@
   <script src="./script.js" defer></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
