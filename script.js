@@ -111,7 +111,7 @@
 
     // frame reveal
     const frameOpacity = clamp((p - frameStart) / (frameEnd - frameStart), 0, 1);
-    frame.style.opacity = String(frameOpacity);
+    frame.style.opacity = "1";
 
     // FIT media (fullscreen -> frame window)
     const tFit = clamp((p - fitStart) / (fitEnd - fitStart), 0, 1);
@@ -191,3 +191,4 @@
 
   update();
 })();
+
