@@ -32,7 +32,10 @@
   menu?.addEventListener("click", (e) => { if (e.target === menu) setMenu(false); });
   $$(".menu__item", menu || document).forEach(a => a.addEventListener("click", () => setMenu(false)));
 
-  // Make videos as “non-interactive” as possible (clean)
+  // mark JS on (for fail-safe lookbook animations)
+  document.body.classList.add("js-on");
+
+  // Make videos “non-interactive” + try autoplay
   document.addEventListener("DOMContentLoaded", () => {
     $$("video.media--video").forEach(v => {
       v.controls = false;
@@ -51,11 +54,22 @@
       v.addEventListener("click", (e) => e.preventDefault());
       v.addEventListener("contextmenu", (e) => e.preventDefault());
 
-      // Try play (some browsers need a nudge)
       const p = v.play();
       if (p && typeof p.catch === "function") p.catch(() => {});
     });
   });
+
+  // Lookbook premium reveal (safe)
+  const spreads = document.querySelectorAll(".spread");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add("is-visible");
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.35 });
+  spreads.forEach(s => io.observe(s));
 
   // chapters
   const chapters = $$("[data-chapter]").map(sec => {
@@ -74,18 +88,15 @@
   function updateChapter(c){
     if (prefersReduced) return;
 
-    const { sec, sticky, visual, frame, win, copy, overlay, scroll } = c;
+    const { sec, sticky, visual, win, copy, overlay, scroll } = c;
 
-    // progress in this chapter
     const total = sec.offsetHeight - sticky.offsetHeight;
     const scrolled = clamp(window.scrollY - sec.offsetTop, 0, total);
-    const p = total > 0 ? scrolled / total : 0; // 0..1
+    const p = total > 0 ? scrolled / total : 0;
 
-   // OLD (zu schnell) -> NEW (langsamer / länger)
-const copyStart = 0.10, copyEnd = 0.40;
-const frameStart = 0.28, frameEnd = 0.55;
-const fitStart = 0.18, fitEnd = 0.92;
-const tossStart = 0.94, tossEnd = 1.00;
+    // slower, premium timings (more scroll before switch)
+    const copyStart = 0.10, copyEnd = 0.42;
+    const fitStart  = 0.18, fitEnd  = 0.92;
 
     // copy fade
     if (copy){
@@ -93,48 +104,36 @@ const tossStart = 0.94, tossEnd = 1.00;
       const e = ease(t);
       copy.style.opacity = String(1 - e);
       copy.style.transform = `translate3d(0, ${-18 * e}px, 0)`;
-      copy.style.filter = `blur(${2.2 * e}px)`;
+      copy.style.filter = `blur(${2.0 * e}px)`;
       copy.style.pointerEvents = e > 0.85 ? "none" : "auto";
     }
 
-    // overlay slightly lowers to reveal media “pure”
+    // overlay stays light (never “censor”)
     if (overlay){
-      const t = clamp((p - 0.10) / 0.50, 0, 1);
-      overlay.style.opacity = String(lerp(1, 0.58, ease(t)));
+      const t = clamp((p - 0.12) / 0.55, 0, 1);
+      overlay.style.opacity = String(lerp(0.55, 0.42, ease(t)));
     }
 
-    // scroll hint fade
+    // scroll hint fades
     if (scroll){
-      const t = clamp((p - 0.12) / 0.22, 0, 1);
+      const t = clamp((p - 0.14) / 0.24, 0, 1);
       scroll.style.opacity = String(1 - t);
     }
 
-    // frame reveal
-    const frameOpacity = clamp((p - frameStart) / (frameEnd - frameStart), 0, 1);
-    frame.style.opacity = "1";
-
-    // FIT media (fullscreen -> frame window)
+    // Fit: viewport -> window rect (stable start = fullscreen)
     const tFit = clamp((p - fitStart) / (fitEnd - fitStart), 0, 1);
-    const eFit = ease(tFit * tFit); // extra smooth am Anfang, fühlt sich premium an
-    // Cinematic matte bars (0px -> 90px)
-const matte = lerp(0, Math.min(90, window.innerHeight * 0.12), ease(clamp((p - 0.22) / 0.55, 0, 1)));
-visual.style.setProperty("--matte", `${matte}px`);
-
-// Rounded corners appear slowly
-const r = lerp(0, 26, ease(clamp((p - 0.28) / 0.52, 0, 1)));
-visual.style.borderRadius = `${r}px`;
-
+    const eFit = ease(tFit * tFit); // extra smooth
 
     const end = win.getBoundingClientRect();
 
-    // Start rect = viewport (stable, no weird “jump”)
+    const navH = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--navH")) || 64);
     const vw = window.innerWidth;
-    const vh = window.innerHeight - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--navH")) || 64);
+    const vh = window.innerHeight - navH;
 
     const startW = vw;
     const startH = vh;
     const startCx = vw / 2;
-    const startCy = (vh / 2) + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--navH")) || 64);
+    const startCy = (vh / 2) + navH;
 
     const endCx = end.left + end.width / 2;
     const endCy = end.top + end.height / 2;
@@ -147,30 +146,27 @@ visual.style.borderRadius = `${r}px`;
     const sTarget = Math.min(sx, sy);
     const scale = lerp(1, sTarget, eFit);
 
-    // subtle polish (avoid heavy blur for perf)
-    const op = lerp(1, 0.94, eFit);
-   visual.style.borderRadius = `${lerp(0, 26, eFit)}px`;
-    visual.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${scale})`;
+    // tiny premium “pop” (subtle)
+    const pop = 1 + 0.016 * Math.sin(eFit * Math.PI);
+    const finalScale = scale * pop;
 
-    // frame settle (tiny)
-    const settle = ease(clamp((p - 0.30) / 0.55, 0, 1));
-    const fScale = lerp(0.94, 1, settle);
-    const pop = 1 + 0.02 * Math.sin(eFit * Math.PI);
-visual.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${scale * pop})`;
+    // rounding only as it settles (no boxes)
+    const r = lerp(0, 26, ease(clamp((p - 0.30) / 0.52, 0, 1)));
+    visual.style.borderRadius = `${r}px`;
 
-    // Premium dissolve (no toss, no fall)
-const tOut = clamp((p - 0.88) / 0.12, 0, 1);
-const eOut = ease(tOut);
+    // apply transform
+    visual.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${finalScale})`;
+    visual.style.opacity = "1";
+    visual.style.filter = "none";
 
-// main visual gently dissolves
-visual.style.opacity = String(lerp(1, 0, eOut));
-visual.style.filter = `blur(${lerp(0, 14, eOut)}px)`;
+    // END: premium dissolve (no fall, no toss, no abrupt)
+    const tOut = clamp((p - 0.90) / 0.10, 0, 1);
+    const eOut = ease(tOut);
 
-// backdrop becomes primary
-if (overlay){
-  overlay.style.opacity = String(lerp(.6, .9, eOut));
-}
-
+    if (tOut > 0){
+      visual.style.opacity = String(lerp(1, 0, eOut));
+      visual.style.filter = `blur(${lerp(0, 10, eOut)}px)`;
+    }
   }
 
   function update(){
@@ -187,31 +183,10 @@ if (overlay){
   window.addEventListener("scroll", requestTick, { passive:true });
   window.addEventListener("resize", requestTick, { passive:true });
 
-  // When video metadata loads, recalc (prevents odd sizing)
+  // when video metadata loads: recalc (prevents weird sizing)
   $$("video.media--video").forEach(v => {
     v.addEventListener("loadedmetadata", () => requestTick(), { once:true });
   });
 
   update();
-
-// Lookbook editorial reveal
-const spreads = document.querySelectorAll(".spread");
-
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting){
-      entry.target.classList.add("is-visible");
-      io.unobserve(entry.target);
-    }
-  });
-}, {
-  threshold: 0.35
-});
-
-spreads.forEach(s => io.observe(s));
 })();
-
-
-
-
-
