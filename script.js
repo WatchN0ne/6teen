@@ -81,11 +81,11 @@
     const scrolled = clamp(window.scrollY - sec.offsetTop, 0, total);
     const p = total > 0 ? scrolled / total : 0; // 0..1
 
-    // timings (Apple-like: copy fades, frame appears, media fits)
-    const copyStart = 0.08, copyEnd = 0.28;
-    const frameStart = 0.18, frameEnd = 0.42;
-    const fitStart = 0.16, fitEnd = 0.78;
-    const tossStart = 0.86, tossEnd = 1.00;
+   // OLD (zu schnell) -> NEW (langsamer / länger)
+const copyStart = 0.10, copyEnd = 0.40;
+const frameStart = 0.28, frameEnd = 0.55;
+const fitStart = 0.18, fitEnd = 0.92;
+const tossStart = 0.94, tossEnd = 1.00;
 
     // copy fade
     if (copy){
@@ -115,7 +115,15 @@
 
     // FIT media (fullscreen -> frame window)
     const tFit = clamp((p - fitStart) / (fitEnd - fitStart), 0, 1);
-    const eFit = ease(tFit);
+    const eFit = ease(tFit * tFit); // extra smooth am Anfang, fühlt sich premium an
+    // Cinematic matte bars (0px -> 90px)
+const matte = lerp(0, Math.min(90, window.innerHeight * 0.12), ease(clamp((p - 0.22) / 0.55, 0, 1)));
+visual.style.setProperty("--matte", `${matte}px`);
+
+// Rounded corners appear slowly
+const r = lerp(0, 26, ease(clamp((p - 0.28) / 0.52, 0, 1)));
+visual.style.borderRadius = `${r}px`;
+
 
     const end = win.getBoundingClientRect();
 
@@ -147,7 +155,8 @@
     // frame settle (tiny)
     const settle = ease(clamp((p - 0.30) / 0.55, 0, 1));
     const fScale = lerp(0.94, 1, settle);
-    frame.style.transform = `translate3d(-50%, -46%, 0) scale(${fScale})`;
+    const pop = 1 + 0.02 * Math.sin(eFit * Math.PI);
+visual.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${scale * pop})`;
 
     // “Page toss” at end: frame drifts away (very premium)
     // (nur bei Chapter 01 + 03; Chapter 02 bleibt clean)
@@ -155,9 +164,9 @@
       const tToss = clamp((p - tossStart) / (tossEnd - tossStart), 0, 1);
       const eToss = ease(tToss);
 
-      const rot = lerp(0, -9, eToss);
-      const tx  = lerp(0, -140, eToss);
-      const ty  = lerp(0, -220, eToss);
+      const rot = lerp(0, -6, eToss);
+      const tx  = lerp(0, -90, eToss);
+      const ty  = lerp(0, -140, eToss);
       const fade = lerp(1, 0, eToss);
 
       // multiply with frameOpacity so it doesn't pop
@@ -191,5 +200,6 @@
 
   update();
 })();
+
 
 
