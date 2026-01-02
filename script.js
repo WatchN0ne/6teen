@@ -158,25 +158,19 @@ visual.style.borderRadius = `${r}px`;
     const pop = 1 + 0.02 * Math.sin(eFit * Math.PI);
 visual.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${scale * pop})`;
 
-    // “Page toss” at end: frame drifts away (very premium)
-    // (nur bei Chapter 01 + 03; Chapter 02 bleibt clean)
-    if (sec.classList.contains("chapter--video")){
-      const tToss = clamp((p - tossStart) / (tossEnd - tossStart), 0, 1);
-      const eToss = ease(tToss);
+    // Premium dissolve (no toss, no fall)
+const tOut = clamp((p - 0.88) / 0.12, 0, 1);
+const eOut = ease(tOut);
 
-      const rot = lerp(0, -6, eToss);
-      const tx  = lerp(0, -90, eToss);
-      const ty  = lerp(0, -140, eToss);
-      const fade = lerp(1, 0, eToss);
+// main visual gently dissolves
+visual.style.opacity = String(lerp(1, 0, eOut));
+visual.style.filter = `blur(${lerp(0, 14, eOut)}px)`;
 
-      // multiply with frameOpacity so it doesn't pop
-      frame.style.opacity = String(frameOpacity * fade);
-      frame.style.transform =
-        `translate3d(calc(-50% + ${tx}px), calc(-46% + ${ty}px), 0) rotate(${rot}deg) scale(${fScale})`;
+// backdrop becomes primary
+if (overlay){
+  overlay.style.opacity = String(lerp(.6, .9, eOut));
+}
 
-      // keep media alive but calmer
-      visual.style.opacity = String(lerp(op, 0.72, eToss));
-    }
   }
 
   function update(){
@@ -200,6 +194,7 @@ visual.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${scale * pop})
 
   update();
 })();
+
 
 
 
