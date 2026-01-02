@@ -1,56 +1,40 @@
 (() => {
   "use strict";
 
-  const $ = (sel, root = document) => root.querySelector(sel);
-  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const $  = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Helpers
-  const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
-  const lerp = (a, b, t) => a + (b - a) * t;
-  const mapRange = (v, inMin, inMax, outMin, outMax) => {
-    const t = (v - inMin) / (inMax - inMin);
-    return outMin + clamp(t, 0, 1) * (outMax - outMin);
-  };
-  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const lerp  = (a, b, t) => a + (b - a) * t;
+  const ease  = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
-  // Year
+  // year
   const year = $("#year");
   if (year) year.textContent = String(new Date().getFullYear());
 
-  // Menu
-  const menu = $("#menuPanel");
-  const openBtn = document.querySelector('[data-open="menu"]');
-  const closeBtn = document.querySelector('[data-close="menu"]');
+  // menu
+  const menu = $("#menu");
+  const openBtn = $("[data-menu-open]");
+  const closeBtn = $("[data-menu-close]");
 
-  const setMenu = (open) => {
+  function setMenu(open){
     if (!menu || !openBtn) return;
     menu.classList.toggle("is-open", open);
     menu.setAttribute("aria-hidden", String(!open));
     openBtn.setAttribute("aria-expanded", String(open));
     document.body.style.overflow = open ? "hidden" : "";
-  };
+  }
 
   openBtn?.addEventListener("click", () => setMenu(true));
   closeBtn?.addEventListener("click", () => setMenu(false));
   menu?.addEventListener("click", (e) => { if (e.target === menu) setMenu(false); });
-  $$(".menu__item", menu || document).forEach((a) => a.addEventListener("click", () => setMenu(false)));
+  $$(".menu__item", menu || document).forEach(a => a.addEventListener("click", () => setMenu(false)));
 
-  // Toast demo
-  const toast = $("#toast");
-  const toastBtn = document.querySelector('[data-toast="true"]');
-  let toastT = null;
-  toastBtn?.addEventListener("click", () => {
-    if (!toast) return;
-    toast.classList.add("is-on");
-    clearTimeout(toastT);
-    toastT = setTimeout(() => toast.classList.remove("is-on"), 1600);
-  });
-
-  // Make videos ultra-clean (no focus / no pip / no interaction)
+  // Make videos as “non-interactive” as possible (clean)
   document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll("video.heroVideo").forEach((v) => {
+    $$("video.media--video").forEach(v => {
       v.controls = false;
       v.muted = true;
       v.loop = true;
@@ -67,171 +51,143 @@
       v.addEventListener("click", (e) => e.preventDefault());
       v.addEventListener("contextmenu", (e) => e.preventDefault());
 
-      // once metadata is ready, recalc (prevents “weird swoosh”)
-      v.addEventListener("loadedmetadata", () => {
-        window.dispatchEvent(new Event("resize"));
-      }, { once: true });
-
-      // try play (some browsers still need it)
+      // Try play (some browsers need a nudge)
       const p = v.play();
       if (p && typeof p.catch === "function") p.catch(() => {});
     });
   });
 
-  // Anchor offset under sticky nav
-  const navLinks = $$('a[href^="#"]').filter(a => (a.getAttribute("href") || "").length > 1);
-  navLinks.forEach((a) => {
-    a.addEventListener("click", (e) => {
-      const hash = a.getAttribute("href");
-      const target = hash ? document.querySelector(hash) : null;
-      if (!target) return;
-      e.preventDefault();
-      const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--navH"), 10) || 64;
-      const top = target.getBoundingClientRect().top + window.scrollY - navH;
-      window.scrollTo({ top, behavior: prefersReduced ? "auto" : "smooth" });
-    });
-  });
-
-  // Lookbook rail thumb + drag
-  const railTrack = document.querySelector("[data-rail-track]");
-  const railThumb = document.querySelector("[data-rail-thumb]");
-  if (railTrack && railThumb) {
-    const updateRail = () => {
-      const max = railTrack.scrollWidth - railTrack.clientWidth;
-      const p = max > 0 ? railTrack.scrollLeft / max : 0;
-      railThumb.style.transform = `translateX(${p * 400}%)`;
-    };
-    railTrack.addEventListener("scroll", updateRail, { passive: true });
-    updateRail();
-
-    let down = false, startX = 0, startScroll = 0;
-    railTrack.addEventListener("pointerdown", (e) => {
-      down = true;
-      startX = e.clientX;
-      startScroll = railTrack.scrollLeft;
-      railTrack.setPointerCapture(e.pointerId);
-    });
-    railTrack.addEventListener("pointermove", (e) => {
-      if (!down) return;
-      railTrack.scrollLeft = startScroll - (e.clientX - startX);
-    });
-    const end = () => down = false;
-    railTrack.addEventListener("pointerup", end);
-    railTrack.addEventListener("pointercancel", end);
-    railTrack.addEventListener("mouseleave", end);
-  }
-
-  // Collect swoosh sections
-  const swooshes = $$("[data-swoosh]")
-    .map((sec) => {
-      const sticky = sec.querySelector("[data-sticky]");
-      const visual = sec.querySelector("[data-visual]");
-      const frame = sec.querySelector("[data-frame]");
-      const win = sec.querySelector("[data-window]");
-      const copy = sec.querySelector(".swoosh__copy");
-      const hint = sec.querySelector(".scrollHint");
-      return { sec, sticky, visual, frame, win, copy, hint };
-    })
-    .filter(x => x.sticky && x.visual && x.frame && x.win);
+  // chapters
+  const chapters = $$("[data-chapter]").map(sec => {
+    const sticky = sec.querySelector("[data-sticky]");
+    const visual = sec.querySelector("[data-visual]");
+    const frame  = sec.querySelector("[data-frame]");
+    const win    = sec.querySelector("[data-window]");
+    const copy   = sec.querySelector(".chapter__copy");
+    const overlay= sec.querySelector(".chapter__overlay");
+    const scroll = sec.querySelector(".scroll");
+    return { sec, sticky, visual, frame, win, copy, overlay, scroll };
+  }).filter(x => x.sticky && x.visual && x.frame && x.win);
 
   let ticking = false;
 
-  function updateSwoosh(s) {
+  function updateChapter(c){
     if (prefersReduced) return;
 
-    const { sec, sticky, visual, frame, win, copy, hint } = s;
+    const { sec, sticky, visual, frame, win, copy, overlay, scroll } = c;
 
+    // progress in this chapter
     const total = sec.offsetHeight - sticky.offsetHeight;
     const scrolled = clamp(window.scrollY - sec.offsetTop, 0, total);
-    const p = total > 0 ? scrolled / total : 0;
+    const p = total > 0 ? scrolled / total : 0; // 0..1
 
-    // Copy fades a bit later (prevents “empty moment”)
-    if (copy) {
-      const hideT = clamp((p - 0.14) / 0.22, 0, 1);
-      const eHide = ease(hideT);
-      copy.style.opacity = String(1 - eHide);
-      copy.style.transform = `translate3d(0, ${-26 * eHide}px, 0)`;
-      copy.style.filter = `blur(${6 * eHide}px)`;
-      copy.style.pointerEvents = eHide > 0.85 ? "none" : "auto";
+    // timings (Apple-like: copy fades, frame appears, media fits)
+    const copyStart = 0.08, copyEnd = 0.28;
+    const frameStart = 0.18, frameEnd = 0.42;
+    const fitStart = 0.16, fitEnd = 0.78;
+    const tossStart = 0.86, tossEnd = 1.00;
+
+    // copy fade
+    if (copy){
+      const t = clamp((p - copyStart) / (copyEnd - copyStart), 0, 1);
+      const e = ease(t);
+      copy.style.opacity = String(1 - e);
+      copy.style.transform = `translate3d(0, ${-18 * e}px, 0)`;
+      copy.style.filter = `blur(${2.2 * e}px)`;
+      copy.style.pointerEvents = e > 0.85 ? "none" : "auto";
     }
 
-    if (hint) {
-      hint.style.opacity = String(1 - mapRange(p, 0.14, 0.30, 0, 1));
+    // overlay slightly lowers to reveal media “pure”
+    if (overlay){
+      const t = clamp((p - 0.10) / 0.50, 0, 1);
+      overlay.style.opacity = String(lerp(1, 0.58, ease(t)));
     }
 
-    // Frame reveal earlier
-    const frameOpacity = mapRange(p, 0.16, 0.42, 0, 1);
+    // scroll hint fade
+    if (scroll){
+      const t = clamp((p - 0.12) / 0.22, 0, 1);
+      scroll.style.opacity = String(1 - t);
+    }
+
+    // frame reveal
+    const frameOpacity = clamp((p - frameStart) / (frameEnd - frameStart), 0, 1);
     frame.style.opacity = String(frameOpacity);
 
-    // Fit animation
-    const tStart = 0.18;
-    const tEnd = 0.78;
-    const t = clamp((p - tStart) / (tEnd - tStart), 0, 1);
-    const e = ease(t);
+    // FIT media (fullscreen -> frame window)
+    const tFit = clamp((p - fitStart) / (fitEnd - fitStart), 0, 1);
+    const eFit = ease(tFit);
 
-    const start = visual.getBoundingClientRect();
     const end = win.getBoundingClientRect();
 
-    const startCx = start.left + start.width / 2;
-    const startCy = start.top + start.height / 2;
+    // Start rect = viewport (stable, no weird “jump”)
+    const vw = window.innerWidth;
+    const vh = window.innerHeight - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--navH")) || 64);
+
+    const startW = vw;
+    const startH = vh;
+    const startCx = vw / 2;
+    const startCy = (vh / 2) + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--navH")) || 64);
+
     const endCx = end.left + end.width / 2;
     const endCy = end.top + end.height / 2;
 
-    const dx = (endCx - startCx) * e;
-    const dy = (endCy - startCy) * e;
+    const dx = (endCx - startCx) * eFit;
+    const dy = (endCy - startCy) * eFit;
 
-    const sx = end.width / start.width;
-    const sy = end.height / start.height;
+    const sx = end.width / startW;
+    const sy = end.height / startH;
     const sTarget = Math.min(sx, sy);
-    const scale = lerp(1, sTarget, e);
+    const scale = lerp(1, sTarget, eFit);
 
-    const blur = lerp(0, 1.3, e);
-    const op = lerp(1, 0.92, e);
-
-    visual.style.transformOrigin = "center center";
-    visual.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${scale})`;
-    visual.style.filter = `blur(${blur}px)`;
+    // subtle polish (avoid heavy blur for perf)
+    const op = lerp(1, 0.94, eFit);
     visual.style.opacity = String(op);
+    visual.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${scale})`;
 
-    // Frame settle
-    const settle = ease(mapRange(p, 0.30, 0.88, 0, 1));
-    const frameScale = lerp(0.92, 1.0, settle);
-    const frameTy = lerp(10, 0, settle);
-    frame.style.transform = `translate3d(-50%, ${-46 + (-frameTy/2)}%, 0) scale(${frameScale})`;
+    // frame settle (tiny)
+    const settle = ease(clamp((p - 0.30) / 0.55, 0, 1));
+    const fScale = lerp(0.94, 1, settle);
+    frame.style.transform = `translate3d(-50%, -46%, 0) scale(${fScale})`;
 
-    // Magazine “throw-away” at very end (only for chapter01 hero)
-    if (sec.classList.contains("swoosh--hero")) {
-      const toss = clamp((p - 0.86) / 0.14, 0, 1);
-      const eToss = ease(toss);
+    // “Page toss” at end: frame drifts away (very premium)
+    // (nur bei Chapter 01 + 03; Chapter 02 bleibt clean)
+    if (sec.classList.contains("chapter--video")){
+      const tToss = clamp((p - tossStart) / (tossEnd - tossStart), 0, 1);
+      const eToss = ease(tToss);
 
-      // frame tilts + moves out
-      const rot = lerp(0, -10, eToss);
-      const tx = lerp(0, -140, eToss);
-      const ty = lerp(0, -180, eToss);
-      const fOp = lerp(1, 0, eToss);
+      const rot = lerp(0, -9, eToss);
+      const tx  = lerp(0, -140, eToss);
+      const ty  = lerp(0, -220, eToss);
+      const fade = lerp(1, 0, eToss);
 
-      frame.style.opacity = String(frameOpacity * fOp);
-      frame.style.transform = `translate3d(calc(-50% + ${tx}px), calc(-46% + ${ty}px), 0) rotate(${rot}deg) scale(${frameScale})`;
+      // multiply with frameOpacity so it doesn't pop
+      frame.style.opacity = String(frameOpacity * fade);
+      frame.style.transform =
+        `translate3d(calc(-50% + ${tx}px), calc(-46% + ${ty}px), 0) rotate(${rot}deg) scale(${fScale})`;
 
-      // visual soft fade after toss starts
-      const vOp = lerp(op, 0.65, eToss);
-      visual.style.opacity = String(vOp);
+      // keep media alive but calmer
+      visual.style.opacity = String(lerp(op, 0.72, eToss));
     }
   }
 
-  function update() {
+  function update(){
     ticking = false;
-    for (const s of swooshes) updateSwoosh(s);
+    for (const c of chapters) updateChapter(c);
   }
 
-  function requestTick() {
+  function requestTick(){
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(update);
   }
 
-  window.addEventListener("scroll", requestTick, { passive: true });
-  window.addEventListener("resize", requestTick, { passive: true });
+  window.addEventListener("scroll", requestTick, { passive:true });
+  window.addEventListener("resize", requestTick, { passive:true });
+
+  // When video metadata loads, recalc (prevents odd sizing)
+  $$("video.media--video").forEach(v => {
+    v.addEventListener("loadedmetadata", () => requestTick(), { once:true });
+  });
 
   update();
 })();
