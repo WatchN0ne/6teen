@@ -183,7 +183,7 @@
 
     // 1) Copy disappears early (so only cover/visual remains)
     if (copy) {
-      const hideT = clamp((p - 0.06) / 0.26, 0, 1);
+      const hideT = clamp((p - 0.12) / 0.24, 0, 1);
       const eHide = ease(hideT);
       copy.style.opacity = String(1 - eHide);
       copy.style.transform = `translate3d(0, ${-28 * eHide}px, 0)`;
@@ -197,12 +197,12 @@
     }
 
     // 3) Frame reveal
-    const frameOpacity = mapRange(p, 0.22, 0.55, 0, 1);
+    const frameOpacity = mapRange(p, 0.16, 0.42, 0, 1);
     frame.style.opacity = String(frameOpacity);
 
     // 4) Visual fits into frame window (pixel-based)
-    const tStart = 0.10;
-    const tEnd = 0.82;
+    const tStart = 0.14;
+const tEnd = 0.78;
     const t = clamp((p - tStart) / (tEnd - tStart), 0, 1);
     const e = ease(t);
 
@@ -261,5 +261,6 @@
   // initial render
   update();
 })();
+
 
 
