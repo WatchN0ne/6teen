@@ -625,3 +625,69 @@ a:hover{ opacity:.92; }
 .chapter__media{
   filter: saturate(1.02) contrast(1.03);
 }
+
+/* ===== Cinematic Swoosh Upgrade (premium) ===== */
+
+/* the fullscreen visual */
+.chapter__media{
+  will-change: transform, opacity, filter, border-radius;
+  transform-origin: center center;
+}
+
+/* add subtle film grade */
+.chapter__media{
+  filter: contrast(1.05) saturate(1.05);
+}
+
+/* MATTE BARS overlay (no boxes, looks like editorial) */
+.chapter__media::before,
+.chapter__media::after{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  height:0px;              /* JS will animate by CSS var */
+  background: rgba(0,0,0,.72);
+  pointer-events:none;
+  z-index:3;
+}
+
+.chapter__media::before{ top:0; }
+.chapter__media::after{ bottom:0; }
+
+/* this is the animated bar size */
+.chapter__media{
+  --matte: 0px;
+}
+.chapter__media::before,
+.chapter__media::after{
+  height: var(--matte);
+}
+
+/* subtle edge vignette (feels Apple) */
+.chapter__media .media{
+  transform: scale(1.02);
+}
+.chapter__media::marker{ display:none; }
+
+/* premium rounding when “compressed” */
+.chapter__media{
+  border-radius: 0px; /* JS animates */
+  overflow:hidden;
+}
+
+/* kill ANY frame guides/boxes you still had */
+.frame, .frame *{
+  border:0 !important;
+  box-shadow:none !important;
+}
+.frame{ background: transparent !important; }
+.frame__mast, .frame__tag, .frame__grain{ display:none !important; }
+
+/* window only (invisible target, but gives a soft landing) */
+.frame__window{
+  inset:0 !important;
+  border-radius: 26px !important;
+  overflow:hidden !important;
+  background: rgba(255,255,255,.02);
+  box-shadow: 0 30px 120px rgba(0,0,0,.55);
+}
