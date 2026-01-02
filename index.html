@@ -71,14 +71,11 @@
     <section class="chapter chapter--video" id="chapter01" data-chapter>
       <div class="chapter__sticky" data-sticky>
         <div class="chapter__media" data-visual>
-          <!-- Ersetze src mit deinem Video-Link (mp4). Kein controls. -->
-          <video class="media media--video"
-            autoplay muted loop playsinline preload="metadata"
-            tabindex="-1" aria-hidden="true"
-            disablepictureinpicture
-            controlslist="nodownload noplaybackrate noremoteplayback">
-            <source src="Street Clothing Brand Promotional Video.mp4" type="video/mp4" />
-          </video>
+         <div class="chapter__backdrop">
+  <!-- DUPLIKAT vom Media -->
+  <video autoplay muted loop playsinline preload="metadata">
+    <source src="./video-01.mp4" type="video/mp4">
+  </video>
         </div>
 
         <!-- editorial overlay (nicht boxig) -->
@@ -222,10 +219,9 @@
     <section class="chapter chapter--image" id="chapter02" data-chapter>
       <div class="chapter__sticky" data-sticky>
         <div class="chapter__media" data-visual>
-          <img class="media media--img" loading="eager" decoding="async"
-            src="56a64594-b75b-4ba5-98cd-beadfe669d82.png"
-            alt="Chapter 02 Visual" />
-        </div>
+          <div class="chapter__backdrop">
+  <img src="DEIN_BILD_LINK.jpg" alt="">
+</div>
 
         <div class="chapter__overlay chapter__overlay--alt" aria-hidden="true"></div>
 
@@ -260,14 +256,13 @@
     <section class="chapter chapter--video" id="chapter03" data-chapter>
       <div class="chapter__sticky" data-sticky>
         <div class="chapter__media" data-visual>
-          <video class="media media--video"
-            autoplay muted loop playsinline preload="metadata"
-            tabindex="-1" aria-hidden="true"
-            disablepictureinpicture
-            controlslist="nodownload noplaybackrate noremoteplayback">
-            <source src="BORZ WEAR (Streetwear Commercial Video) - ICE SQUAD MEDIA.mp4" type="video/mp4" />
-          </video>
-        </div>
+         <div class="chapter__backdrop">
+  <!-- DUPLIKAT vom Media -->
+  <video autoplay muted loop playsinline preload="metadata">
+    <source src="./video-01.mp4" type="video/mp4">
+  </video>
+</div>
+
 
         <div class="chapter__overlay chapter__overlay--soft" aria-hidden="true"></div>
 
@@ -364,6 +359,7 @@
   <script src="./script.js" defer></script>
 </body>
 </html>
+
 
 
 
