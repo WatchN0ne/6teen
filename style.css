@@ -621,3 +621,7 @@ a:hover{ opacity:.92; }
 .gridlines{
   display:none !important;
 }
+
+.chapter__media{
+  filter: saturate(1.02) contrast(1.03);
+}
