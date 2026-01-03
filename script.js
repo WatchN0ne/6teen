@@ -32,18 +32,18 @@
   menu?.addEventListener("click", (e) => { if (e.target === menu) setMenu(false); });
   $$(".menu__item", menu || document).forEach(a => a.addEventListener("click", () => setMenu(false)));
 
-  // mark JS on (for fail-safe lookbook animations)
+  // JS on (fail-safe lookbook)
   document.body.classList.add("js-on");
 
-  // Make videos “non-interactive” + try autoplay
+  // Make videos non-interactive and try autoplay
   document.addEventListener("DOMContentLoaded", () => {
     $$("video.media--video").forEach(v => {
       v.controls = false;
       v.muted = true;
       v.loop = true;
       v.autoplay = true;
-
       v.disablePictureInPicture = true;
+
       v.setAttribute("disablepictureinpicture", "");
       v.setAttribute("controlslist", "nodownload noplaybackrate noremoteplayback");
       v.setAttribute("playsinline", "");
@@ -59,7 +59,7 @@
     });
   });
 
-  // Lookbook premium reveal (safe)
+  // Lookbook reveal
   const spreads = document.querySelectorAll(".spread");
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -94,7 +94,7 @@
     const scrolled = clamp(window.scrollY - sec.offsetTop, 0, total);
     const p = total > 0 ? scrolled / total : 0;
 
-    // slower, premium timings (more scroll before switch)
+    // slower premium timings
     const copyStart = 0.10, copyEnd = 0.42;
     const fitStart  = 0.18, fitEnd  = 0.92;
 
@@ -108,7 +108,7 @@
       copy.style.pointerEvents = e > 0.85 ? "none" : "auto";
     }
 
-    // overlay stays light (never “censor”)
+    // overlay stays light
     if (overlay){
       const t = clamp((p - 0.12) / 0.55, 0, 1);
       overlay.style.opacity = String(lerp(0.55, 0.42, ease(t)));
@@ -120,9 +120,9 @@
       scroll.style.opacity = String(1 - t);
     }
 
-    // Fit: viewport -> window rect (stable start = fullscreen)
+    // Fit: viewport -> window rect
     const tFit = clamp((p - fitStart) / (fitEnd - fitStart), 0, 1);
-    const eFit = ease(tFit * tFit); // extra smooth
+    const eFit = ease(tFit * tFit);
 
     const end = win.getBoundingClientRect();
 
@@ -146,11 +146,11 @@
     const sTarget = Math.min(sx, sy);
     const scale = lerp(1, sTarget, eFit);
 
-    // tiny premium “pop” (subtle)
+    // subtle premium pop
     const pop = 1 + 0.016 * Math.sin(eFit * Math.PI);
     const finalScale = scale * pop;
 
-    // rounding only as it settles (no boxes)
+    // rounding only as it settles
     const r = lerp(0, 26, ease(clamp((p - 0.30) / 0.52, 0, 1)));
     visual.style.borderRadius = `${r}px`;
 
@@ -159,22 +159,27 @@
     visual.style.opacity = "1";
     visual.style.filter = "none";
 
+    // ✅ Chapter 2: Mobile “cover -> reveal more” (no black bars)
+    if (sec.id === "chapter02"){
+      const img = visual.querySelector("img");
+      if (img){
+        img.style.objectFit = "contain"; // reveal possible later
+        const startZoom = window.innerWidth <= 980 ? 1.55 : 1.35;
+        const endZoom = 1.0;
+
+        const revealT = clamp((p - 0.10) / 0.70, 0, 1);
+        const revealE = ease(revealT);
+
+        img.style.transform = `scale(${lerp(startZoom, endZoom, revealE)})`;
+      }
+    }
+
     // END BLEND (no empty, no vanish)
-const tOut = clamp((p - 0.88) / 0.12, 0, 1);
-const eOut = ease(tOut);
-
-// keep visual alive (never goes to 0)
-visual.style.opacity = "1";
-visual.style.filter = "none";
-
-// darken overlay slightly to prepare next section blend
-if (overlay){
-  overlay.style.opacity = String(lerp(0.42, 0.70, eOut));
-}
-}
-
-}
-
+    const tOut = clamp((p - 0.88) / 0.12, 0, 1);
+    const eOut = ease(tOut);
+    if (overlay){
+      overlay.style.opacity = String(lerp(0.42, 0.70, eOut));
+    }
   }
 
   function update(){
@@ -191,14 +196,9 @@ if (overlay){
   window.addEventListener("scroll", requestTick, { passive:true });
   window.addEventListener("resize", requestTick, { passive:true });
 
-  // when video metadata loads: recalc (prevents weird sizing)
   $$("video.media--video").forEach(v => {
     v.addEventListener("loadedmetadata", () => requestTick(), { once:true });
   });
 
   update();
 })();
-
-
-
-
