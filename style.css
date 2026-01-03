@@ -575,22 +575,3 @@ body.js-on .spread.is-visible .spread__copy{
 .chapter__sticky{
   background:#000;
 }
-
-/* Chapter 2: Hybrid "cover -> reveal more" (mobile premium) */
-#chapter02 .chapter__media{
-  background:#000; /* hinter dem Bild immer sauber */
-}
-
-#chapter02 .media--img{
-  object-fit: contain;            /* später komplett sichtbar */
-  object-position: 50% 50%;
-  transform: scale(1.35);         /* Start wirkt wie cover (keine Balken) */
-  will-change: transform;
-}
-
-/* auf Mobile etwas stärker zoomen am Anfang */
-@media (max-width: 980px){
-  #chapter02 .media--img{
-    transform: scale(1.55);
-  }
-}
