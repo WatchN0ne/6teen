@@ -624,7 +624,7 @@ body::after{
 
 /* Du kannst hier irgendein Internet-Bild reinpacken (Paper texture / crumpled paper) */
 :root{
-  --paperTexture: url("PASTE_DEIN_PAPIER_LINK_HIER");
+  --paperTexture: url("https://images.unsplash.com/photo-1647810942733-bc6257134779?q=80&w=2070&auto=format&fit=crop");
 }
 
 /* Visual kann Filter bekommen */
@@ -648,8 +648,9 @@ body::after{
   background-size: cover;
   background-position: center;
   mix-blend-mode: overlay;    /* wirkt wie Papierfasern/Licht */
-  opacity: var(--paperOp, 0);
+  opacity: calc(var(--paperOp, 0) * 0.75);
   filter: contrast(1.12) saturate(0.9) brightness(1.05);
+  filter: blur(.6px) contrast(1.05) saturate(0.85);
 }
 
 /* Glanz/Knitter-Highlights */
@@ -665,3 +666,4 @@ body::after{
   opacity: var(--paperHi, 0);
   filter: blur(.4px);
 }
+
