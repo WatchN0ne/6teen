@@ -6,12 +6,9 @@
   --hair:rgba(255,255,255,.10);
   --hair2:rgba(255,255,255,.14);
   --navH:64px;
-
   --r:28px;
   --r2:36px;
-
   --ease:cubic-bezier(.2,.8,.2,1);
-  --ease2:cubic-bezier(.22,1,.36,1);
 }
 
 *{ box-sizing:border-box; }
@@ -216,27 +213,22 @@ a:hover{ opacity:.92; }
   top: var(--navH);
   height: calc(100vh - var(--navH));
   overflow:hidden;
+  background:#000;
 }
 
-/* PREMIUM FILL — no visible “grey box” after swoosh */
+/* Ambient fill (no visible “box”) */
 .chapter__sticky::before{
   content:"";
   position:absolute;
-  inset:0;                 /* wichtig: keine -20% Fläche, die wie Box wirkt */
+  inset:0;
   z-index:0;
   pointer-events:none;
-
-  /* sehr weicher ambient fill ohne harte Kanten */
   background:
     radial-gradient(1200px 900px at 50% 20%, rgba(255,255,255,.07), transparent 60%),
     radial-gradient(900px 700px at 15% 70%, rgba(255,255,255,.05), transparent 62%),
     radial-gradient(900px 700px at 85% 80%, rgba(255,255,255,.04), transparent 62%),
     linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.92));
-
-  opacity:1;
-  /* kein blur! blur macht es milchig/boxig */
 }
-
 
 .chapter__media{
   position:absolute;
@@ -263,7 +255,7 @@ a:hover{ opacity:.92; }
   outline:none !important;
 }
 
-/* Overlay: LIGHT + premium (not “censor”) */
+/* Overlay stays LIGHT (never censor) */
 .chapter__overlay{
   position:absolute;
   inset:0;
@@ -297,7 +289,7 @@ a:hover{ opacity:.92; }
   will-change: transform, opacity, filter;
 }
 
-/* Invisible target: only window is soft matte (no boxes) */
+/* Target frame is invisible */
 .frame{
   position:absolute;
   z-index:4;
@@ -306,14 +298,13 @@ a:hover{ opacity:.92; }
   width: min(860px, 74vw);
   aspect-ratio: 4 / 5;
   transform: translate3d(-50%,-46%,0) scale(.96);
-  opacity:1; /* always on; window is subtle */
+  opacity:1;
   pointer-events:none;
   background: transparent;
   border:0;
   box-shadow:none;
   padding:0;
 }
-/* Target window is ONLY for JS math — must be visually invisible */
 .frame__window{
   position:absolute;
   inset:0;
@@ -321,10 +312,9 @@ a:hover{ opacity:.92; }
   overflow:hidden;
   background: transparent !important;
   box-shadow: none !important;
-  opacity: 0 !important;        /* <- absolut unsichtbar */
+  opacity: 0 !important;   /* <- absolut unsichtbar */
   pointer-events:none;
 }
-
 
 /* Scroll hint */
 .scroll{
@@ -351,24 +341,30 @@ a:hover{ opacity:.92; }
 .chapter__spacer{ height: 260vh; }
 .chapter__spacer--short{ height: 230vh; }
 
-/* STATEMENT */
-/* Blend statement into chapter (no gap) */
+/* STATEMENT – Apple magazine blend (no gap) */
 .statement{
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  margin-top: -18vh;     /* zieht Statement nach oben über das Chapter */
+  margin-top: -18vh;
   position: relative;
   z-index: 20;
   padding: 72px 18px 56px;
-  background:
-    linear-gradient(180deg, rgba(7,8,11,0) 0%, rgba(7,8,11,.85) 24%, rgba(7,8,11,1) 60%);
   border-bottom:1px solid var(--hair);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7,8,11,0) 0%,
+      rgba(7,8,11,.65) 25%,
+      rgba(7,8,11,.92) 55%,
+      rgba(7,8,11,1) 75%
+    );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
-
 .statement__big{
   margin:0 auto 10px;
   max-width: 1280px;
   font-size: clamp(20px, 2.2vw, 36px);
   letter-spacing:-0.04em;
+  text-shadow: 0 1px 0 rgba(0,0,0,.35);
 }
 .statement__small{
   margin:0 auto;
@@ -569,9 +565,4 @@ body.js-on .spread.is-visible .spread__copy{
   }
   .chapter__spacer{ height: 140vh; }
   body.js-on .spread{ opacity:1 !important; transform:none !important; filter:none !important; }
-}
-
-/* Always solid base behind everything (kills box feeling) */
-.chapter__sticky{
-  background:#000;
 }
