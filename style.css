@@ -566,3 +566,13 @@ body.js-on .spread.is-visible .spread__copy{
   .chapter__spacer{ height: 140vh; }
   body.js-on .spread{ opacity:1 !important; transform:none !important; filter:none !important; }
 }
+
+@media (hover:hover){
+  .spread__media img{
+    transition: transform .9s cubic-bezier(.2,.8,.2,1), filter .9s cubic-bezier(.2,.8,.2,1);
+  }
+  .spread:hover .spread__media img{
+    transform: scale(1.04);
+    filter: contrast(1.05) saturate(1.05);
+  }
+}
