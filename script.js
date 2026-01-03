@@ -170,6 +170,21 @@ visual.style.filter = "none";
 // darken overlay slightly to prepare next section blend
 if (overlay){
   overlay.style.opacity = String(lerp(0.42, 0.70, eOut));
+  // Chapter 2 image: zoom out while scrolling => reveals more image (premium)
+if (sec.id === "chapter02") {
+  const img = visual.querySelector("img");
+  if (img) {
+    // start zoom (cover-like) -> end zoom (contain-like)
+    const startZoom = window.innerWidth <= 980 ? 1.55 : 1.35;
+    const endZoom = 1.0;
+
+    // make reveal happen mostly during fit phase (smooth)
+    const revealT = clamp((p - 0.10) / 0.70, 0, 1);
+    const revealE = ease(revealT);
+
+    img.style.transform = `scale(${lerp(startZoom, endZoom, revealE)})`;
+}
+
 }
 
   }
@@ -195,4 +210,5 @@ if (overlay){
 
   update();
 })();
+
 
