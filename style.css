@@ -619,3 +619,49 @@ body::after{
   body::before{ opacity:.48; }
 }
 
+
+/* ===== REALISTIC PAPER CRUMPLE (TEXTURE + DISPLACEMENT) ===== */
+
+/* Du kannst hier irgendein Internet-Bild reinpacken (Paper texture / crumpled paper) */
+:root{
+  --paperTexture: url("PASTE_DEIN_PAPIER_LINK_HIER");
+}
+
+/* Visual kann Filter bekommen */
+.chapter__media{
+  transform-style: preserve-3d;
+}
+
+/* Wenn crumple aktiv ist: echte Verzerrung */
+.chapter__media.is-crumpling{
+  filter: url(#paperCrumple);
+  will-change: filter, transform;
+}
+
+/* Papier-Overlay: macht es realistisch */
+.chapter__media.is-crumpling::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image: var(--paperTexture);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: overlay;    /* wirkt wie Papierfasern/Licht */
+  opacity: var(--paperOp, 0);
+  filter: contrast(1.12) saturate(0.9) brightness(1.05);
+}
+
+/* Glanz/Knitter-Highlights */
+.chapter__media.is-crumpling::after{
+  content:"";
+  position:absolute;
+  inset:-8%;
+  pointer-events:none;
+  background:
+    radial-gradient(1200px 900px at 50% 25%, rgba(255,255,255,.22), transparent 60%),
+    linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,0) 42%, rgba(255,255,255,.10));
+  mix-blend-mode: soft-light;
+  opacity: var(--paperHi, 0);
+  filter: blur(.4px);
+}
