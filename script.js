@@ -201,4 +201,17 @@
   });
 
   update();
+  // Magnetic button hotspot (desktop only)
+if (window.matchMedia("(hover:hover)").matches){
+  document.querySelectorAll(".btn").forEach(btn => {
+    btn.addEventListener("mousemove", (e) => {
+      const r = btn.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width) * 100;
+      const y = ((e.clientY - r.top) / r.height) * 100;
+      btn.style.setProperty("--mx", `${x}%`);
+      btn.style.setProperty("--my", `${y}%`);
+    });
+  });
+}
 })();
+
