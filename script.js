@@ -170,7 +170,7 @@ visual.style.filter = "none";
 // darken overlay slightly to prepare next section blend
 if (overlay){
   overlay.style.opacity = String(lerp(0.42, 0.70, eOut));
-
+}
 }
 
 }
@@ -198,6 +198,7 @@ if (overlay){
 
   update();
 })();
+
 
 
 
