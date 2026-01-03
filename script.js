@@ -159,6 +159,34 @@
     visual.style.opacity = "1";
     visual.style.filter = "none";
 
+    // ===== REALISTIC PAPER CRUMPLE (END EXIT) =====
+const crStart = 0.86;
+const crEnd   = 0.98;
+const tC = clamp((p - crStart) / (crEnd - crStart), 0, 1);
+const eC = ease(tC);
+
+visual.classList.toggle("is-crumpling", tC > 0.01);
+visual.style.setProperty("--paperOp", String(lerp(0, 0.22, eC)));
+visual.style.setProperty("--paperHi", String(lerp(0, 0.26, eC)));
+
+const disp = document.querySelector('#paperCrumple feDisplacementMap');
+if (disp){
+  disp.setAttribute("scale", String(lerp(0, 30, eC)));
+}
+
+if (tC > 0){
+  const lift = lerp(0, -110, eC);
+  const rotX = lerp(0, 24, eC);
+  const rotZ = lerp(0, -3.5, eC);
+  const squX = lerp(1, 0.88, eC);
+  const squY = lerp(1, 0.70, eC);
+
+  visual.style.transform =
+    `translate3d(${dx}px, ${dy + lift}px, 0) ` +
+    `scale(${finalScale}) rotateX(${rotX}deg) rotateZ(${rotZ}deg) ` +
+    `scaleX(${squX}) scaleY(${squY})`;
+}
+
     // ✅ Chapter 2: Mobile “cover -> reveal more” (no black bars)
     if (sec.id === "chapter02"){
       const img = visual.querySelector("img");
@@ -202,5 +230,6 @@
 
   update();
 })();
+
 
 
