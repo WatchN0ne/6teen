@@ -618,3 +618,63 @@ body::after{
   body::after{ opacity:.05; }
   body::before{ opacity:.48; }
 }
+
+/* ===== MAGAZINE CRUMPLE EXIT (premium) ===== */
+.chapter__media{
+  transform-style: preserve-3d;
+}
+
+.crumple{
+  position:absolute;
+  inset:0;
+  z-index:2;              /* über visual, unter text */
+  pointer-events:none;
+  opacity:0;
+  transform: translateZ(0);
+  will-change: opacity, transform, filter;
+}
+
+/* Fake “paper fiber + crumple” without extra images */
+.crumple::before{
+  content:"";
+  position:absolute;
+  inset:-8%;
+  background:
+    radial-gradient(1400px 900px at 50% 30%, rgba(255,255,255,.12), transparent 60%),
+    radial-gradient(900px 700px at 20% 75%, rgba(255,255,255,.06), transparent 62%),
+    radial-gradient(900px 700px at 85% 80%, rgba(255,255,255,.05), transparent 62%),
+    linear-gradient(135deg,
+      rgba(255,255,255,.06) 0%,
+      rgba(255,255,255,0) 45%,
+      rgba(255,255,255,.06) 100%);
+  mix-blend-mode: overlay;
+  opacity:.0;
+  filter: blur(.2px) contrast(1.05);
+  transform: rotate(-2deg);
+}
+
+/* Subtle “crease” lines */
+.crumple::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    repeating-linear-gradient(115deg,
+      rgba(255,255,255,.05) 0px,
+      rgba(255,255,255,.05) 1px,
+      rgba(255,255,255,0) 10px,
+      rgba(255,255,255,0) 26px);
+  mix-blend-mode: soft-light;
+  opacity:0;
+  filter: blur(.6px);
+}
+
+/* When crumpling, give it paper shadow + edge */
+.chapter.is-crumpling [data-visual]{
+  box-shadow: 0 50px 140px rgba(0,0,0,.55);
+}
+
+/* ensure layers order */
+.chapter__overlay{ z-index:3; }
+.chapter__copy{ z-index:4; }
+.crumple{ z-index:2; }
