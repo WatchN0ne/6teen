@@ -344,10 +344,19 @@
     </footer>
 
   </main>
+<!-- REAL PAPER CRUMPLE FILTER (one-time) -->
+<svg width="0" height="0" style="position:absolute">
+  <filter id="paperCrumple" x="-25%" y="-25%" width="150%" height="150%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="9" result="noise"></feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="0"
+      xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+  </filter>
+</svg>
 
   <script src="./script.js" defer></script>
 </body>
 </html>
+
 
 
 
