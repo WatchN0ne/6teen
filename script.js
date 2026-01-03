@@ -166,12 +166,12 @@ const tC = clamp((p - crStart) / (crEnd - crStart), 0, 1);
 const eC = ease(tC);
 
 visual.classList.toggle("is-crumpling", tC > 0.01);
-visual.style.setProperty("--paperOp", String(lerp(0, 0.22, eC)));
+visual.style.setProperty("--paperOp", String(lerp(0, 0.16, eC)));
 visual.style.setProperty("--paperHi", String(lerp(0, 0.26, eC)));
 
 const disp = document.querySelector('#paperCrumple feDisplacementMap');
 if (disp){
-  disp.setAttribute("scale", String(lerp(0, 30, eC)));
+ disp.setAttribute("scale", String(lerp(0, 22, eC)));
 }
 
 if (tC > 0){
@@ -230,6 +230,7 @@ if (tC > 0){
 
   update();
 })();
+
 
 
 
