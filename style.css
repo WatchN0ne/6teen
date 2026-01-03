@@ -667,3 +667,45 @@ body::after{
   filter: blur(.4px);
 }
 
+
+/* ===== PAPER LAYER FIX: texture must sit ABOVE media ===== */
+.chapter__media{
+  position:absolute; /* sollte bei dir eh so sein */
+  isolation:isolate; /* wichtig für blend modes */
+}
+
+.chapter__media > .media{
+  position:relative;
+  z-index:1; /* Video/Bild unter den Papier-Layern */
+}
+
+/* Nur wenn crumple aktiv ist, werden Layer sichtbar */
+.chapter__media.is-crumpling::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;                 /* <- über Video/Bild */
+  pointer-events:none;
+
+  background-image: var(--paperTexture);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: overlay;
+  opacity: calc(var(--paperOp, 0) * 0.75);
+  filter: blur(.6px) contrast(1.05) saturate(0.85);
+}
+
+.chapter__media.is-crumpling::after{
+  content:"";
+  position:absolute;
+  inset:-8%;
+  z-index:3;                 /* <- über Textur */
+  pointer-events:none;
+
+  background:
+    radial-gradient(1200px 900px at 50% 25%, rgba(255,255,255,.22), transparent 60%),
+    linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,0) 42%, rgba(255,255,255,.10));
+  mix-blend-mode: soft-light;
+  opacity: var(--paperHi, 0);
+  filter: blur(.4px);
+}
