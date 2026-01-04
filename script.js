@@ -223,6 +223,8 @@ if (sec.id === "chapter03") {
       `translate3d(${dx + wob}px, ${dy + lift}px, 0) ` +
       `scale(${finalScale}) rotateX(${rotX}deg) rotateZ(${rotZ}deg) ` +
       `scaleX(${squX}) scaleY(${squY})`;
+
+    if (tC > 0.02) console.log("CRUMPLE ACTIVE", tC);
   }
 }
 
@@ -270,6 +272,7 @@ if (sec.id === "chapter03") {
 
   update();
 })();
+
 
 
 
