@@ -747,3 +747,52 @@ body::after{
   mix-blend-mode: soft-light;
   opacity: .0;
 }
+
+.chapter__media{
+  position:absolute;
+  inset:0;
+  isolation:isolate;
+}
+
+/* Video unten */
+.mediaWrap{
+  position:absolute;
+  inset:0;
+  z-index:1;
+}
+
+.mediaWrap video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* Papier darüber */
+.paperLayer{
+  position:absolute;
+  inset:0;
+  z-index:3;                /* ← DAS ist der Schlüssel */
+  pointer-events:none;
+
+  background-image: var(--paperTexture);
+  background-size: cover;
+  background-position: center;
+
+  mix-blend-mode: overlay;
+  opacity: 0;
+
+  filter: blur(.6px) contrast(1.05) saturate(0.85);
+  will-change: opacity, transform;
+}
+
+/* optional: Licht-Falten */
+.paperLayer::after{
+  content:"";
+  position:absolute;
+  inset:-6%;
+  background:
+    radial-gradient(1200px 900px at 50% 25%, rgba(255,255,255,.22), transparent 60%),
+    linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,0) 42%, rgba(255,255,255,.10));
+  mix-blend-mode: soft-light;
+  opacity:.0;
+}
