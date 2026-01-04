@@ -8,7 +8,9 @@
 
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const lerp  = (a, b, t) => a + (b - a) * t;
-  const ease  = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+  // apple-ish easing (clean)
+  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
   // year
   const year = $("#year");
@@ -32,10 +34,10 @@
   menu?.addEventListener("click", (e) => { if (e.target === menu) setMenu(false); });
   $$(".menu__item", menu || document).forEach(a => a.addEventListener("click", () => setMenu(false)));
 
-  // JS on (fail-safe lookbook)
+  // JS on (lookbook fail-safe)
   document.body.classList.add("js-on");
 
-  // Make videos non-interactive and try autoplay
+  // videos: keep clean (no user controls)
   document.addEventListener("DOMContentLoaded", () => {
     $$("video.media--video").forEach(v => {
       v.controls = false;
@@ -60,67 +62,92 @@
   });
 
   // Lookbook reveal
-  const spreads = document.querySelectorAll(".spread");
+  const spreads = $$(".spread");
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting){
-        entry.target.classList.add("is-visible");
+        // premium stagger
+        const i = spreads.indexOf(entry.target);
+        setTimeout(() => entry.target.classList.add("is-visible"), i * 90);
         io.unobserve(entry.target);
       }
     });
   }, { threshold: 0.35 });
   spreads.forEach(s => io.observe(s));
 
-  // chapters
+  // Chapters
   const chapters = $$("[data-chapter]").map(sec => {
     const sticky = sec.querySelector("[data-sticky]");
     const visual = sec.querySelector("[data-visual]");
-    const frame  = sec.querySelector("[data-frame]");
     const win    = sec.querySelector("[data-window]");
-    const copy   = sec.querySelector(".chapter__copy");
+    const copy   = sec.querySelector("[data-typo]"); // important for apple motion
     const overlay= sec.querySelector(".chapter__overlay");
     const scroll = sec.querySelector(".scroll");
-    return { sec, sticky, visual, frame, win, copy, overlay, scroll };
-  }).filter(x => x.sticky && x.visual && x.frame && x.win);
+
+    // chapter03 paper layers
+    const paper  = sec.querySelector(".paperLayer");
+    const paperHi= sec.querySelector(".paperHi");
+
+    return { sec, sticky, visual, win, copy, overlay, scroll, paper, paperHi };
+  }).filter(x => x.sticky && x.visual && x.win);
 
   let ticking = false;
+
+  function updateTypo(copyEl, p){
+    if (!copyEl) return;
+
+    // clean magazine fade window
+    const t = clamp((p - 0.10) / 0.34, 0, 1);
+    const e = ease(t);
+
+    // whole block moves up slightly and fades
+    copyEl.style.opacity = String(1 - e);
+    copyEl.style.transform = `translate3d(0, ${-22 * e}px, 0)`;
+    copyEl.style.filter = `blur(${1.6 * e}px)`;
+
+    // “Apple magazine” micro letter-spacing on headlines
+    const h = copyEl.querySelector(".h1, .h2");
+    if (h){
+      const ls = lerp(-0.07, -0.02, e); // subtle
+      h.style.letterSpacing = `${ls}em`;
+    }
+
+    // lead gets a tiny tracking lift
+    const lead = copyEl.querySelector(".lead");
+    if (lead){
+      const ls2 = lerp(-0.01, 0.02, e);
+      lead.style.letterSpacing = `${ls2}em`;
+    }
+  }
 
   function updateChapter(c){
     if (prefersReduced) return;
 
-    const { sec, sticky, visual, win, copy, overlay, scroll } = c;
+    const { sec, sticky, visual, win, copy, overlay, scroll, paper, paperHi } = c;
 
     const total = sec.offsetHeight - sticky.offsetHeight;
     const scrolled = clamp(window.scrollY - sec.offsetTop, 0, total);
     const p = total > 0 ? scrolled / total : 0;
 
-    // slower premium timings
-    const copyStart = 0.10, copyEnd = 0.42;
-    const fitStart  = 0.18, fitEnd  = 0.92;
+    // Apple magazine typography motion
+    updateTypo(copy, p);
 
-    // copy fade
-    if (copy){
-      const t = clamp((p - copyStart) / (copyEnd - copyStart), 0, 1);
-      const e = ease(t);
-      copy.style.opacity = String(1 - e);
-      copy.style.transform = `translate3d(0, ${-18 * e}px, 0)`;
-      copy.style.filter = `blur(${2.0 * e}px)`;
-      copy.style.pointerEvents = e > 0.85 ? "none" : "auto";
-    }
-
-    // overlay stays light
-    if (overlay){
-      const t = clamp((p - 0.12) / 0.55, 0, 1);
-      overlay.style.opacity = String(lerp(0.55, 0.42, ease(t)));
-    }
-
-    // scroll hint fades
+    // scroll hint fade
     if (scroll){
       const t = clamp((p - 0.14) / 0.24, 0, 1);
       scroll.style.opacity = String(1 - t);
     }
 
-    // Fit: viewport -> window rect
+    // overlay breathes
+    if (overlay){
+      const t = clamp((p - 0.12) / 0.55, 0, 1);
+      overlay.style.opacity = String(lerp(0.55, 0.42, ease(t)));
+    }
+
+    // Fit: viewport -> window rect (premium slow pacing)
+    const fitStart  = 0.18;
+    const fitEnd    = 0.92;
+
     const tFit = clamp((p - fitStart) / (fitEnd - fitStart), 0, 1);
     const eFit = ease(tFit * tFit);
 
@@ -146,65 +173,20 @@
     const sTarget = Math.min(sx, sy);
     const scale = lerp(1, sTarget, eFit);
 
-    // subtle premium pop
     const pop = 1 + 0.016 * Math.sin(eFit * Math.PI);
     const finalScale = scale * pop;
 
-    // rounding only as it settles
     const r = lerp(0, 26, ease(clamp((p - 0.30) / 0.52, 0, 1)));
     visual.style.borderRadius = `${r}px`;
 
-    // apply transform
     visual.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${finalScale})`;
     visual.style.opacity = "1";
     visual.style.filter = "none";
 
-  // ===== PAPER CRUMPLE (SAFE, VISIBLE) =====
-if (sec.id === "chapter03") {
-  const layer = visual.querySelector(".paperLayer");
-
-  const crStart = 0.82;
-  const crEnd   = 0.98;
-  const tC = clamp((p - crStart) / (crEnd - crStart), 0, 1);
-  const eC = ease(tC);
-
-  if (layer) {
-    layer.style.opacity = String(lerp(0, 0.18, eC));
-    layer.style.transform = `translateY(${lerp(0, -12, eC)}px)`;
-  }
-
-  if (tC > 0) {
-    const lift = lerp(0, -60, eC);
-    const rotX = lerp(0, 10, eC);
-    const rotZ = lerp(0, -1.2, eC);
-
-    visual.style.transform =
-      `translate3d(${dx}px, ${dy + lift}px, 0)
-       scale(${finalScale})
-       rotateX(${rotX}deg)
-       rotateZ(${rotZ}deg)`;
-  }
-}
-
-
-    // micro wobble = realistic paper movement (tiny!)
-    const wob = Math.sin(eC * Math.PI * 6) * (1 - eC) * 0.6;
-
-    visual.style.transform =
-      `translate3d(${dx + wob}px, ${dy + lift}px, 0) ` +
-      `scale(${finalScale}) rotateX(${rotX}deg) rotateZ(${rotZ}deg) ` +
-      `scaleX(${squX}) scaleY(${squY})`;
-
-    if (tC > 0.02) console.log("CRUMPLE ACTIVE", tC);
-  }
-}
-
-
-    // ✅ Chapter 2: Mobile “cover -> reveal more” (no black bars)
+    // Chapter 2: cover -> reveal more (mobile friendly)
     if (sec.id === "chapter02"){
-      const img = visual.querySelector("img");
+      const img = visual.querySelector("img.media--chapter2");
       if (img){
-        img.style.objectFit = "contain"; // reveal possible later
         const startZoom = window.innerWidth <= 980 ? 1.55 : 1.35;
         const endZoom = 1.0;
 
@@ -215,7 +197,37 @@ if (sec.id === "chapter03") {
       }
     }
 
-    // END BLEND (no empty, no vanish)
+    // Chapter 3: paper “magazine crumple” overlay + soft physics exit
+    if (sec.id === "chapter03" && paper && paperHi){
+      const crStart = 0.82;
+      const crEnd   = 0.985;
+      const tC = clamp((p - crStart) / (crEnd - crStart), 0, 1);
+      const eC = ease(tC);
+
+      // overlay visibility
+      paper.style.opacity = String(lerp(0, 0.18, eC));
+      paper.style.transform = `translate3d(0, ${lerp(0, -14, eC)}px, 0) rotate(${lerp(0, -1.1, eC)}deg)`;
+
+      paperHi.style.opacity = String(lerp(0, 0.22, eC));
+
+      // physical but not “throw”
+      if (tC > 0){
+        const lift = lerp(0, -70, eC);
+        const rotX = lerp(0, 10, eC);
+        const rotZ = lerp(0, -1.6, eC);
+        const squX = lerp(1, 0.95, eC);
+        const squY = lerp(1, 0.84, eC);
+
+        const wob = Math.sin(eC * Math.PI * 6) * (1 - eC) * 0.6;
+
+        visual.style.transform =
+          `translate3d(${dx + wob}px, ${dy + lift}px, 0) ` +
+          `scale(${finalScale}) rotateX(${rotX}deg) rotateZ(${rotZ}deg) ` +
+          `scaleX(${squX}) scaleY(${squY})`;
+      }
+    }
+
+    // END BLEND (no empty)
     const tOut = clamp((p - 0.88) / 0.12, 0, 1);
     const eOut = ease(tOut);
     if (overlay){
@@ -237,17 +249,7 @@ if (sec.id === "chapter03") {
   window.addEventListener("scroll", requestTick, { passive:true });
   window.addEventListener("resize", requestTick, { passive:true });
 
-  $$("video.media--video").forEach(v => {
-    v.addEventListener("loadedmetadata", () => requestTick(), { once:true });
-  });
+  $$("video.media--video").forEach(v => v.addEventListener("loadedmetadata", () => requestTick(), { once:true }));
 
   update();
 })();
-
-
-
-
-
-
-
-
