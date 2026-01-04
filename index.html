@@ -6,7 +6,6 @@
   <meta name="theme-color" content="#07080b" />
   <title>sixteen — editorial</title>
 
-  <link rel="preconnect" href="https://images.unsplash.com" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 
@@ -16,7 +15,8 @@
   <!-- NAV -->
   <header class="nav">
     <a class="brand" href="#top" aria-label="sixteen">
-      <img class="brand__logo" src="7f4119a6-4506-48a0-b054-b69c0becef1a.png" alt="sixteen" />
+      <!-- LOGO SLOT -->
+      <!-- <img class="brand__logo" src="DEIN_LOGO_LINK.svg" alt="sixteen" /> -->
       <span class="brand__word">sixteen</span>
     </a>
 
@@ -77,13 +77,13 @@
             tabindex="-1" aria-hidden="true"
             disablepictureinpicture
             controlslist="nodownload noplaybackrate noremoteplayback">
-            <source src="Street Clothing Brand Promotional Video.mp4" type="video/mp4" />
+            <source src="./video-01.mp4" type="video/mp4" />
           </video>
         </div>
-        
+
         <div class="chapter__overlay" aria-hidden="true"></div>
 
-        <div class="chapter__copy">
+        <div class="chapter__copy" data-typo>
           <p class="eyebrow">SIXTEEN <span class="dot">•</span> CHAPTER 01</p>
           <h1 class="h1">Kleidung, die still schreit.</h1>
           <p class="lead">Fashion-Editorial in Bewegung. Keine Kacheln. Kein Lärm.</p>
@@ -96,7 +96,7 @@
           <p class="micro">Scroll → Text verschwindet, Motion bleibt clean.</p>
         </div>
 
-        <!-- Unsichtbares Target für den Fit (keine Box sichtbar) -->
+        <!-- Unsichtbares Target (nur fürs Math, nichts sichtbar) -->
         <div class="frame" data-frame aria-hidden="true">
           <div class="frame__window" data-window></div>
         </div>
@@ -110,7 +110,7 @@
       <div class="chapter__spacer" aria-hidden="true"></div>
     </section>
 
-    <!-- STATEMENT (blendet in Chapter rein, keine Lücke) -->
+    <!-- STATEMENT -->
     <section class="statement">
       <p class="statement__big">“Weniger laut. Mehr Wirkung.”</p>
       <p class="statement__small">sixteen ist nicht Trend. sixteen ist Haltung.</p>
@@ -123,14 +123,14 @@
       <header class="sectionhead">
         <p class="eyebrow">LOOKBOOK</p>
         <h2 class="h2">Six looks. One language.</h2>
-        <p class="lead">Ersetze die Bilder durch deine Links. Kein Shop — nur Editorial Spreads.</p>
+        <p class="lead">Ersetze Bilder durch deine Links. Kein Shop — nur Editorial Spreads.</p>
       </header>
 
       <div class="spreads">
         <article class="spread">
           <div class="spread__media">
             <img class="media media--img" loading="lazy" decoding="async"
-              src="c35618ff-4743-44c9-8e72-104a1b81accd.png"
+              src="https://images.unsplash.com/photo-1520975958225-0a5f6f83d8c3?auto=format&fit=crop&w=2400&q=80"
               alt="Look 01" />
           </div>
           <div class="spread__copy">
@@ -143,7 +143,7 @@
         <article class="spread spread--reverse">
           <div class="spread__media">
             <img class="media media--img" loading="lazy" decoding="async"
-              src="9fcc705a-506e-4850-91fd-4886013a5092.png"
+              src="https://images.unsplash.com/photo-1520975777841-1871f5b0c9d8?auto=format&fit=crop&w=2400&q=80"
               alt="Look 02" />
           </div>
           <div class="spread__copy">
@@ -156,7 +156,7 @@
         <article class="spread">
           <div class="spread__media">
             <img class="media media--img" loading="lazy" decoding="async"
-              src="da192f40-59c8-4198-b864-532c25816729.png"
+              src="https://images.unsplash.com/photo-1520976001372-e79d84d6c2d4?auto=format&fit=crop&w=2400&q=80"
               alt="Look 03" />
           </div>
           <div class="spread__copy">
@@ -169,7 +169,7 @@
         <article class="spread spread--reverse">
           <div class="spread__media">
             <img class="media media--img" loading="lazy" decoding="async"
-              src="3a139ff4-7724-4473-ae0b-aa60caa98412.png"
+              src="https://images.unsplash.com/photo-1520975869014-fb78f8c9b33a?auto=format&fit=crop&w=2400&q=80"
               alt="Look 04" />
           </div>
           <div class="spread__copy">
@@ -182,7 +182,7 @@
         <article class="spread">
           <div class="spread__media">
             <img class="media media--img" loading="lazy" decoding="async"
-              src="b7267696-d372-4ca1-b6f9-46be0da8ad73.png"
+              src="https://images.unsplash.com/photo-1520975708799-14c64b0e8b6f?auto=format&fit=crop&w=2400&q=80"
               alt="Look 05" />
           </div>
           <div class="spread__copy">
@@ -195,7 +195,7 @@
         <article class="spread spread--reverse">
           <div class="spread__media">
             <img class="media media--img" loading="lazy" decoding="async"
-              src="418fc896-a1d9-47d0-8a94-1f764f3d2287.png"
+              src="https://images.unsplash.com/photo-1520975940186-0a3c8e6b70f1?auto=format&fit=crop&w=2400&q=80"
               alt="Look 06" />
           </div>
           <div class="spread__copy">
@@ -208,20 +208,20 @@
     </section>
 
     <!-- =========================
-         CHAPTER 02 — IMAGE (MOBILE FIX: cover -> reveal)
+         CHAPTER 02 — IMAGE (cover -> reveal more)
          ========================= -->
     <section class="chapter chapter--image" id="chapter02" data-chapter>
       <div class="chapter__sticky" data-sticky>
 
         <div class="chapter__media" data-visual>
-          <img class="media media--img" loading="eager" decoding="async"
-            src="56a64594-b75b-4ba5-98cd-beadfe669d82.png"
+          <img class="media media--img media--chapter2" loading="eager" decoding="async"
+            src="https://images.unsplash.com/photo-1520975959223-8b5f6f3cfe4c?auto=format&fit=crop&w=2600&q=80"
             alt="Chapter 02 Visual" />
         </div>
 
         <div class="chapter__overlay chapter__overlay--alt" aria-hidden="true"></div>
 
-        <div class="chapter__copy">
+        <div class="chapter__copy" data-typo>
           <p class="eyebrow">SIXTEEN <span class="dot">•</span> CHAPTER 02</p>
           <h2 class="h1">Silhouette. Presence. Control.</h2>
           <p class="lead">Auf Mobile: Start wie Cover, dann Reveal — du siehst beim Scrollen mehr.</p>
@@ -242,35 +242,35 @@
     </section>
 
     <!-- =========================
-         CHAPTER 03 — VIDEO
+         CHAPTER 03 — VIDEO + PAPER MAGAZINE CRUMPLE
          ========================= -->
     <section class="chapter chapter--video" id="chapter03" data-chapter>
       <div class="chapter__sticky" data-sticky>
 
         <div class="chapter__media" data-visual>
+          <!-- video in its own layer -->
+          <div class="mediaWrap">
+            <video class="media media--video"
+              autoplay muted loop playsinline preload="metadata"
+              tabindex="-1" aria-hidden="true"
+              disablepictureinpicture
+              controlslist="nodownload noplaybackrate noremoteplayback">
+              <source src="./video-02.mp4" type="video/mp4" />
+            </video>
+          </div>
 
-  <div class="mediaWrap">
-    <video class="media media--video"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="metadata">
-      <source src="BORZ WEAR (Streetwear Commercial Video) - ICE SQUAD MEDIA.mp4" type="video/mp4" />
-    </video>
-  </div>
-
-  <div class="paperLayer" aria-hidden="true"></div>
-
-</div>
+          <!-- paper texture ABOVE the video (always works) -->
+          <div class="paperLayer" aria-hidden="true"></div>
+          <div class="paperHi" aria-hidden="true"></div>
+        </div>
 
         <div class="chapter__overlay chapter__overlay--soft" aria-hidden="true"></div>
 
-        <div class="chapter__copy">
+        <div class="chapter__copy" data-typo>
           <p class="eyebrow">SIXTEEN <span class="dot">•</span> CHAPTER 03</p>
-          <h2 class="h1">Motion, aber leise.</h2>
-          <p class="lead">Clean transitions. Premium pacing.</p>
-          <p class="micro">Keine grauen Boxen. Kein “werfen”.</p>
+          <h2 class="h1">Printed motion.</h2>
+          <p class="lead">Magazine-Exit: Papierstruktur + weiche Physik. Kein “werfen”.</p>
+          <p class="micro">Nur hier — wie ein Finale.</p>
         </div>
 
         <div class="frame" data-frame aria-hidden="true">
@@ -351,31 +351,7 @@
     </footer>
 
   </main>
-<!-- REAL PAPER CRUMPLE FILTER (one-time) -->
-<svg width="0" height="0" style="position:absolute">
-  <filter id="paperCrumple" x="-25%" y="-25%" width="150%" height="150%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="9" result="noise"></feTurbulence>
-    <feDisplacementMap in="SourceGraphic" in2="noise" scale="0"
-      xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
-  </filter>
-</svg>
 
   <script src="./script.js" defer></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
