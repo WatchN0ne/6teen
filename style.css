@@ -709,3 +709,41 @@ body::after{
   opacity: var(--paperHi, 0);
   filter: blur(.4px);
 }
+
+:root{
+  --paperTexture: url("https://images.unsplash.com/photo-1647810942733-bc6257134779?q=80&w=2070&auto=format&fit=crop");
+}
+
+/* Paper layer sits ABOVE the media always */
+.chapter__media{
+  isolation:isolate;
+}
+
+.paperLayer{
+  position:absolute;
+  inset:0;
+  z-index:5;                 /* über Video/Bild */
+  pointer-events:none;
+
+  background-image: var(--paperTexture);
+  background-size: cover;
+  background-position: center;
+
+  mix-blend-mode: overlay;
+  opacity: 0;                /* start invisible */
+  filter: blur(.6px) contrast(1.05) saturate(0.85);
+  transition: opacity .15s linear;
+
+  will-change: opacity, transform;
+}
+
+.paperLayer::after{
+  content:"";
+  position:absolute;
+  inset:-8%;
+  background:
+    radial-gradient(1200px 900px at 50% 25%, rgba(255,255,255,.22), transparent 60%),
+    linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,0) 42%, rgba(255,255,255,.10));
+  mix-blend-mode: soft-light;
+  opacity: .0;
+}
