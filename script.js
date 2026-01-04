@@ -159,62 +159,33 @@
     visual.style.opacity = "1";
     visual.style.filter = "none";
 
-    // ===== PAPER CRUMPLE (robust, Chapter 3 only) =====
+  // ===== PAPER CRUMPLE (SAFE, VISIBLE) =====
 if (sec.id === "chapter03") {
   const layer = visual.querySelector(".paperLayer");
 
-  const crStart = 0.86;
-  const crEnd   = 0.985;
+  const crStart = 0.82;
+  const crEnd   = 0.98;
   const tC = clamp((p - crStart) / (crEnd - crStart), 0, 1);
   const eC = ease(tC);
 
   if (layer) {
-    layer.style.opacity = String(lerp(0, 0.16, eC));
-    layer.style.transform = `translate3d(0, ${lerp(0, -20, eC)}px, 0) rotate(${lerp(0, -1.2, eC)}deg)`;
+    layer.style.opacity = String(lerp(0, 0.18, eC));
+    layer.style.transform = `translateY(${lerp(0, -12, eC)}px)`;
   }
 
   if (tC > 0) {
     const lift = lerp(0, -60, eC);
-    const rotX = lerp(0, 12, eC);
-    const rotZ = lerp(0, -1.6, eC);
-    const squX = lerp(1, 0.94, eC);
-    const squY = lerp(1, 0.82, eC);
-
-    const wob = Math.sin(eC * Math.PI * 6) * (1 - eC) * 0.6;
+    const rotX = lerp(0, 10, eC);
+    const rotZ = lerp(0, -1.2, eC);
 
     visual.style.transform =
-      `translate3d(${dx + wob}px, ${dy + lift}px, 0) ` +
-      `scale(${finalScale}) rotateX(${rotX}deg) rotateZ(${rotZ}deg) ` +
-      `scaleX(${squX}) scaleY(${squY})`;
+      `translate3d(${dx}px, ${dy + lift}px, 0)
+       scale(${finalScale})
+       rotateX(${rotX}deg)
+       rotateZ(${rotZ}deg)`;
   }
 }
 
-
-   // ===== PAPER CRUMPLE (Chapter 3 only, premium & safe) =====
-if (sec.id === "chapter03") {
-  const crStart = 0.86;
-  const crEnd   = 0.985;
-  const tC = clamp((p - crStart) / (crEnd - crStart), 0, 1);
-  const eC = ease(tC);
-
-  // enable layers
-  visual.classList.toggle("is-crumpling", tC > 0.01);
-
-  // texture intensity (subtle = premium)
-  visual.style.setProperty("--paperOp", String(lerp(0, 0.16, eC)));
-  visual.style.setProperty("--paperHi", String(lerp(0, 0.22, eC)));
-
-  // OPTIONAL: displacement — often weak on iOS/video, so keep mild
-  const disp = document.querySelector('#paperCrumple feDisplacementMap');
-  if (disp) disp.setAttribute("scale", String(lerp(0, 18, eC)));
-
-  // instead of a big "tilt", do a small physical paper response
-  if (tC > 0) {
-    const lift = lerp(0, -60, eC);
-    const rotX = lerp(0, 12, eC);
-    const rotZ = lerp(0, -1.6, eC);
-    const squX = lerp(1, 0.94, eC);
-    const squY = lerp(1, 0.82, eC);
 
     // micro wobble = realistic paper movement (tiny!)
     const wob = Math.sin(eC * Math.PI * 6) * (1 - eC) * 0.6;
@@ -272,6 +243,7 @@ if (sec.id === "chapter03") {
 
   update();
 })();
+
 
 
 
