@@ -604,8 +604,7 @@ body.js-on .spread.is-visible .spread__copy{
   background-image: var(--paperTexture);
   background-size: cover;
   background-position:center;
-  mix-blend-mode: overlay;
-  opacity: 0;
+  mix-blend-mode: overlay; normal; opacity: 0;
   filter: blur(.6px) contrast(1.05) saturate(0.85);
   will-change: opacity, transform;
 }
@@ -648,4 +647,5 @@ body.js-on .spread.is-visible .spread__copy{
   .chapter__spacer{ height: 140vh; }
   body.js-on .spread{ opacity:1 !important; transform:none !important; filter:none !important; }
 }
+
 
