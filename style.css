@@ -276,7 +276,7 @@ body::after{
 .chapter__media{
   position:absolute;
   inset:0;
-  z-index:1;
+  z-index:4;
   transform: translate3d(0,0,0) scale(1);
   transform-origin: center center;
   will-change: transform, opacity, filter, border-radius;
@@ -325,7 +325,7 @@ body::after{
 
 .chapter__copy{
   position:absolute;
-  z-index:5;
+  z-index:6;
   left: clamp(16px, 4vw, 70px);
   top: clamp(20px, 6vh, 92px);
   width: min(760px, calc(100% - 32px));
@@ -648,3 +648,4 @@ body.js-on .spread.is-visible .spread__copy{
   .chapter__spacer{ height: 140vh; }
   body.js-on .spread{ opacity:1 !important; transform:none !important; filter:none !important; }
 }
+
