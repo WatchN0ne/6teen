@@ -159,6 +159,37 @@
     visual.style.opacity = "1";
     visual.style.filter = "none";
 
+    // ===== PAPER CRUMPLE (robust, Chapter 3 only) =====
+if (sec.id === "chapter03") {
+  const layer = visual.querySelector(".paperLayer");
+
+  const crStart = 0.86;
+  const crEnd   = 0.985;
+  const tC = clamp((p - crStart) / (crEnd - crStart), 0, 1);
+  const eC = ease(tC);
+
+  if (layer) {
+    layer.style.opacity = String(lerp(0, 0.16, eC));
+    layer.style.transform = `translate3d(0, ${lerp(0, -20, eC)}px, 0) rotate(${lerp(0, -1.2, eC)}deg)`;
+  }
+
+  if (tC > 0) {
+    const lift = lerp(0, -60, eC);
+    const rotX = lerp(0, 12, eC);
+    const rotZ = lerp(0, -1.6, eC);
+    const squX = lerp(1, 0.94, eC);
+    const squY = lerp(1, 0.82, eC);
+
+    const wob = Math.sin(eC * Math.PI * 6) * (1 - eC) * 0.6;
+
+    visual.style.transform =
+      `translate3d(${dx + wob}px, ${dy + lift}px, 0) ` +
+      `scale(${finalScale}) rotateX(${rotX}deg) rotateZ(${rotZ}deg) ` +
+      `scaleX(${squX}) scaleY(${squY})`;
+  }
+}
+
+
    // ===== PAPER CRUMPLE (Chapter 3 only, premium & safe) =====
 if (sec.id === "chapter03") {
   const crStart = 0.86;
@@ -239,6 +270,7 @@ if (sec.id === "chapter03") {
 
   update();
 })();
+
 
 
 
